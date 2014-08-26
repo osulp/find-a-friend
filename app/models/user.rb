@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
-	 has_many :posts
-	 before_save { self.email = email.downcase }
- 	 before_create :create_remember_token
+	has_many :posts
+
+  before_save { self.email = email.downcase }
+  before_create :create_remember_token
+
   def User.new_remember_token
     SecureRandom.urlsafe_base64
   end
@@ -12,7 +14,7 @@ class User < ActiveRecord::Base
 
   private
 
-    def create_remember_token
-      self.remember_token = User.digest(User.new_remember_token)
-    end
+  def create_remember_token
+    self.remember_token = User.digest(User.new_remember_token)
+  end
 end
