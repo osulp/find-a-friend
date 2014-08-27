@@ -18,6 +18,9 @@
 # Ignore all in coverage
 /coverage/*
 
+#Ignore config.yml
+/config/config.yml
+
 # Ignore all swap files
 *.swp
 
