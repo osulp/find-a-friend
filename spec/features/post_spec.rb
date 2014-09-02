@@ -28,7 +28,7 @@ describe 'Posts' do
         fill_in "Description", :with => "Test Description"
         fill_in "Location", :with => "Test Location"
         fill_in "Meeting time", :with => Time.now + 2.day.to_i
-        fill_in "End time", :with => Time.now + 2.day.to_i
+        fill_in "End time", :with => Time.now + 3.day.to_i
         click_button "Create Post"
       end
       it "should not display the post" do
