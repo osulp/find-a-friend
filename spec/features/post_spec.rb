@@ -23,9 +23,27 @@ describe 'Posts' do
 
     context "when there is a post for a day in the future" do
       before do
-        post.meeting_time = "3014-01-01 12:00:00"
-        post.save
-        visit root_path
+        visit new_post_path
+        fill_in "Title", :with => "Test Title"
+        fill_in "Description", :with => "Test Description"
+        fill_in "Location", :with => "Test Location"
+        fill_in "Meeting time", :with => Time.now + 2.day.to_i
+        fill_in "End time", :with => Time.now + 3.day.to_i
+        click_button "Create Post"
+      end
+      it "should not display the post" do
+        within '#accordion' do
+          expect(page).to_not have_content(post.title)
+        end
+      end
+    end
+    context "when there is a post for a day in the future with no time filled in" do
+      before do
+        visit new_post_path
+        fill_in "Title", :with => "Test Title"
+        fill_in "Description", :with => "Test Description"
+        fill_in "Location", :with => "Test Location"
+        click_button "Create Post"
       end
       it "should not display the post" do
         within '#accordion' do
