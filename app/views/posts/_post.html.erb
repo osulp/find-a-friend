@@ -10,12 +10,12 @@
           <%= link_to "Delete", post_path(post), :method => :delete if current_user == post.onid && !current_user.nil?%>
         </div>
       </div>
-      <div class="panel panel-body">
-        Description: <%= post.description %><br>
-        Location: <%= post.location %><br>
-        Meeting Time: <%= post.FormatMeetingTime %><br>
-        End Time: <%= post.FormatEndingTime %><br>
-      </div>
     </div>
+  </div>
+  <div class="panel panel-body">
+    Description: <%= post.description %><br>
+    Location: <%= post.location %><br>
+    Meeting Time: <%= post.FormatMeetingTime %><br>
+    End Time: <%= post.FormatEndingTime %><br>
   </div>
 </div>
