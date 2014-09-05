@@ -63,6 +63,7 @@ describe 'Mailer' do
       it "should send the email" do
         expect(ActionMailer::Base.deliveries.length).to eq 1
         expect(ActionMailer::Base.deliveries.first.subject).to have_content("Test Title")
+        expect(ActionMailer::Base.deliveries.first.reply_to).to eq ["testonid@onid.oregonstate.edu"]
         expect(ActionMailer::Base.deliveries.first.body.raw_source).to have_content("testonid")
       end
       context "then when editing the post" do
@@ -81,6 +82,7 @@ describe 'Mailer' do
             it "should send a new email with the new information" do
               expect(ActionMailer::Base.deliveries.length).to eq 2
               expect(ActionMailer::Base.deliveries.last.subject).to have_content("New Title")
+              expect(ActionMailer::Base.deliveries.first.reply_to).to eq ["testonid@onid.oregonstate.edu"]
               expect(ActionMailer::Base.deliveries.first.body.raw_source).to have_content("testonid")
             end
           end
