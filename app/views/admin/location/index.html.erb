@@ -4,8 +4,8 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <%= location.location %>
-      <%= link_to "Edit", edit_location_path %>
-      <%= link_to "Delete", destroy_location_path %>
+      <%= link_to "Edit", edit_location_path(location) %>
+      <%= link_to "Delete", destroy_location_path(location) %>
     </div>
   </div>
 <% end %>
