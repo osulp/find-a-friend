@@ -35,6 +35,17 @@ describe "homepage" do
         post1.save
         visit root_path
       end
+      context "when one of your posts has passed" do
+        before do
+          post1.onid = "testonid"
+          post1.meeting_time = "2011-01-01 00:00:00"
+          post1.save
+          visit root_path
+        end
+        it "should not display the post" do
+          expect(page).to_not have_content(post1.title)
+        end
+      end
       it "should display your posts at the top of the page" do
         expect(page).to have_content("Your Groups")
         expect(page).to have_content(post1.title, :count => 2)
