@@ -56,24 +56,6 @@ describe 'Posts' do
         end
       end
     end
-    context "when there is a post for a day in the future with no time filled in" do
-      before do
-        visit new_post_path
-        fill_in "Title", :with => "Test Title"
-        fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => "Test Location"
-        click_button "Create Post"
-      end
-      it "should not display the post in groups" do
-        within '#accordion' do
-          expect(page).to_not have_content("Test Title")
-        end
-      end
-      it "should display the post in my groups" do
-        expect(page).to have_content("Test Title")
-      end
-    end
-    
     context "and trying to create a new post" do
   	  before do
         click_link "New post"
