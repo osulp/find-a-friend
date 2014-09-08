@@ -7,7 +7,9 @@
     <% if @posts.length != 0 %>
       <% @posts.each do |post| %>
         <% if post.onid == current_user %>
-          <%= render partial: "post", :object => post %>
+          <% if !post.past? %>
+            <%= render partial: "post", :object => post %>
+          <% end %>
         <% end %>
       <% end %>
     <% else %>

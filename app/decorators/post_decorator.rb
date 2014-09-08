@@ -16,4 +16,15 @@ class PostDecorator < Draper::Decorator
     return false
   end
 
+  def past?
+    if object.meeting_time.nil? && object.end_time.nil?
+      return false
+    elsif object.meeting_time.strftime(I18n.t('time.formats.date')) < Time.now.strftime(I18n.t('time.formats.date')) || object.end_time.strftime(I18n.t('time.formats.date')) < Time.now.strftime(I18n.t('time.formats.date'))
+      return true
+    else
+      return false
+    end
+  end
+
 end
+
