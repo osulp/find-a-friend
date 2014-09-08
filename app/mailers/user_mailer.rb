@@ -1,6 +1,7 @@
 class UserMailer < ActionMailer::Base
   default from: "findafriendapp@gmail.com"
 	
+  #resolved merge
 	def new_post_email(post)
 		@post = post
     if @post.allow_onid
