@@ -72,6 +72,19 @@ describe 'navbar' do
           end
         end
       end
+      context "when logged in as an admin" do
+        let(:admin) {create(:admin)}
+        before do
+          RubyCAS::Filter.fake(admin.onid)
+          visit signin_path
+          visit root_path
+        end
+        it "should link to the admin panel" do
+          within(".navbar") do
+            expect(page).to have_link("Admin")
+          end
+        end
+      end
     end
   end
 end
