@@ -54,9 +54,20 @@ describe 'Posts' do
     
     context "and trying to create a new post" do
   	  before do
-        click_link "New post"
+        visit new_post_path
+        @now = Time.now.strftime(I18n.t('time.formats.form'))
+        @now12 = Time.now.strftime((Time.now + 12.hour.to_i).strftime(I18n.t('time.formats.form')))
       end
-    
+      
+      it "should have default times in the respective forms" do
+        within '.meeting_input' do
+          expect(page).to have_selector("input[value='#{@now}']")
+        end
+        within '.end_input' do
+          expect(page).to have_selector("input[value='#{@now12}']")
+        end
+      end
+
       context "after filling all the forms out" do
         before do
           fill_in "Title", :with => "Test Title"
