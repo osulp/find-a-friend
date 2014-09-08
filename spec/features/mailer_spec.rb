@@ -43,6 +43,7 @@ describe 'Mailer' do
             it "should send a new email with the new information" do
               expect(ActionMailer::Base.deliveries.length).to eq 2
               expect(ActionMailer::Base.deliveries.last.subject).to have_content("New Title")
+              expect(ActionMailer::Base.deliveries.last.subject).to_not have_content("Test Title")
               expect(ActionMailer::Base.deliveries.last.body.raw_source).to_not have_content("testonid")
               expect(ActionMailer::Base.deliveries.last.body.raw_source).to have_content("updated.")
             end
