@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :admin do
+    sequence(:onid) {|n| "testonid#{n}" }
   end
 end
