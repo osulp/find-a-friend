@@ -1,9 +1,4 @@
-<% if current_user.nil? %>
-  <%= I18n.t("permission_error.error_string") %>
-<% else %>
-	<h1>Edit post</h1>
-	<%= render 'form' %>
-<% end %>
-
+<h1>Edit post</h1>
+<%= render 'form' %>
 <br>
 <%= link_to 'Back', posts_path %>
