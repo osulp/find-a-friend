@@ -16,8 +16,13 @@ Description:
 Location:
 <%= @post.location %> 
 
-Time:
-From <%= @post.meeting_time %> to <%= @post.end_time %>.
+<% if @post.meeting_time && @post.end_time %>
+  From <%= @post.meeting_time.strftime(I18n.t('time.formats.default')) %> to <%= @post.end_time.strftime(I18n.t('time.formats.default')) %>.
+<% elsif @post.meeting_time && !@post.end_time %>
+  Starting at: <%= @post.meeting_time.strftime(I18n.t('time.formats.default')) %>
+<% else %>
+  A time has not yet been set for this group meeting.
+<% end %>
 
 Sincerely,
   Find-A-Friend
