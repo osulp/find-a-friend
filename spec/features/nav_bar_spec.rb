@@ -28,14 +28,6 @@ describe 'navbar' do
             expect(page).to have_link("Sign in")
           end
         end
-        context "when clicking the new post button" do
-          before do
-            click_link "New post"
-          end
-          it "should throw a permission error" do
-            expect(page).to have_content(I18n.t("permission_error.error_string"))
-          end
-        end
       end
       context "when logged in" do
         before do

@@ -5,7 +5,7 @@ en:
       with_weekday: '%a/%m/%d/%y'
   post:
     no_posts_message: "There are currently no groups posted"
-  permission_error: 
+  permission_error:
     error_string: "You do not have sufficient permissions to complete this request"
   time:
     formats:

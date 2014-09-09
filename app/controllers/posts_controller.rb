@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   respond_to :html, :json
   before_filter :current_user, :only => [:create, :edit, :update, :destroy]
+  before_filter :check_sign_in, :only => [:new, :edit]
   before_filter :find_post, :only => [:edit, :update, :destroy, :show]
 
   def index
@@ -64,4 +65,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id]).decorate
   end
 	
+  def check_sign_in
+    redirect_to signin_path if current_user.nil?
+  end
 end

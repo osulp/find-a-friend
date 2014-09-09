@@ -112,23 +112,6 @@ describe 'Posts' do
     end
   end
   context "When not logged in" do
-    context "and trying to create a new post" do
-	    before do
-		    visit root_path
-		    click_link "New post"
-	    end
-	    it "should give you an insufficient permissions error" do
-		    expect(page).to have_content(I18n.t("permission_error.error_string"))
-	    end
-    end
-	  context "when trying to edit a post" do
-  	  before do
-  		  visit edit_post_path(post.id)
-  	  end
-	    it "should give you an insufficient permissions error" do
-		    expect(page).to have_content(I18n.t("permission_error.error_string"))
-	    end
-	  end
     context "when visiting the show view" do
       before do
         visit post_path(post)
