@@ -21,6 +21,25 @@ describe 'Posts' do
       end
     end
 
+    context "when there is a post for a day in the past" do
+      before do
+        visit new_post_path
+        fill_in "Title", :with => "Test Title"
+        fill_in "Description", :with => "Test Description"
+        fill_in "Location", :with => "Test Location"
+        fill_in "Meeting time", :with => "1990-01-01 12:00:00"
+        fill_in "End time", :with => "1999-01-01 12:00:00"
+        click_button "Create Post"
+      end
+      it "should not display the post in groups" do
+        within "#displayed-groups" do
+          expect(page).to_not have_content("Test Title")
+        end
+      end
+      it "should not display the post in my groups" do
+        expect(page).to_not have_content("Test Title")
+      end
+    end
     context "when there is a post for a day in the future" do
       before do
         visit new_post_path
@@ -31,27 +50,12 @@ describe 'Posts' do
         fill_in "End time", :with => Time.now + 3.day.to_i
         click_button "Create Post"
       end
-      it "should not display the post" do
-        within '#accordion' do
-          expect(page).to_not have_content(post.title)
+      it "should not display the post in groups" do
+        within '#displayed-groups' do
+          expect(page).to_not have_content("Test Title")
         end
       end
     end
-    context "when there is a post for a day in the future with no time filled in" do
-      before do
-        visit new_post_path
-        fill_in "Title", :with => "Test Title"
-        fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => "Test Location"
-        click_button "Create Post"
-      end
-      it "should not display the post" do
-        within '#accordion' do
-          expect(page).to_not have_content(post.title)
-        end
-      end
-    end
-    
     context "and trying to create a new post" do
   	  before do
         visit new_post_path
@@ -84,7 +88,7 @@ describe 'Posts' do
         end
         context "When trying to edit a post" do
       	  before do
-            within("#accordion") do
+            within("#displayed-groups") do
       	      click_link "Edit"
             end
       	  end
@@ -100,7 +104,7 @@ describe 'Posts' do
         end
         context "When trying to delete the post" do
       	  before do
-            within("#accordion") do
+            within("#displayed-groups") do
       	      click_link "Delete"
             end
       	  end

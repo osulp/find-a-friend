@@ -25,7 +25,7 @@ class PostsController < ApplicationController
       flash[:error] = "Unable to save your post"
     end
     if @post.recipients.present?
-      UserMailer.welcome_email(@post).deliver
+      UserMailer.new_post_email(@post).deliver
     end
     respond_with @post, :location => root_path
   end
@@ -41,7 +41,7 @@ class PostsController < ApplicationController
       @post.update_attributes(post_params)
     end
     if @post.recipients.present?
-      UserMailer.welcome_email(@post).deliver
+      UserMailer.update_post_email(@post).deliver
     end
     respond_with @post, :location => root_path
   end

@@ -36,14 +36,41 @@ describe "homepage" do
         visit root_path
       end
       context "when one of your posts has passed" do
-        before do
-          post1.onid = "testonid"
-          post1.meeting_time = "2011-01-01 00:00:00"
-          post1.save
-          visit root_path
+        context "when the year has passed" do
+          before do
+            post1.onid = "testonid"
+            post1.meeting_time = "2011-01-01 00:00:00"
+            post1.end_time = "2011-02-02 00:00:00"
+            post1.save
+            visit root_path
+          end
+          it "should not display the post" do
+            expect(page).to_not have_content(post1.title)
+          end
         end
-        it "should not display the post" do
-          expect(page).to_not have_content(post1.title)
+        context "when the month has passed" do
+          before do
+            post1.onid = "testonid"
+            post1.meeting_time = (Time.now - 1.month.to_i)
+            post1.end_time = (Time.now - 1.month.to_i)
+            post1.save
+            visit root_path
+          end
+          it "should not display the post" do
+            expect(page).to_not have_content(post1.title)
+          end
+        end
+        context "when the day has passed" do
+          before do
+            post1.onid = "testonid"
+            post1.meeting_time = (Time.now - 1.day.to_i)
+            post1.end_time = (Time.now - 1.day.to_i)
+            post1.save
+            visit root_path
+          end
+          it "should not display the post" do
+            expect(page).to_not have_content(post1.title)
+          end
         end
       end
       it "should display your posts at the top of the page" do
@@ -53,6 +80,39 @@ describe "homepage" do
       it "should have links to edit and delete the post" do
         expect(page).to have_content("Edit")
         expect(page).to have_content("Delete")
+      end
+    end
+    context "when the post time has not passed and when logged in as the owner of the post" do
+      before do
+        visit new_post_path
+        fill_in "Title", :with => "test title"
+        fill_in "Description", :with => "description"
+        fill_in "Location", :with => "location"
+        fill_in "Meeting time", :with => (Time.now + 2.day.to_i)
+        fill_in "End time", :with => (Time.now + 2.day.to_i)
+        click_button "Create Post"
+        visit root_path
+      end
+      it "should display the post in 'my posts' but not in groups" do
+        expect(page).to have_content("test title")
+        within '#displayed-groups' do
+          expect(page).to_not have_content("test title")
+        end
+      end
+    end
+    context "when the post time is nil and logged in as the owner of the post" do
+      before do
+        post1.meeting_time = nil
+        post1.end_time = nil
+        post1.onid = "testonid"
+        post1.save
+        visit root_path
+      end
+      it "should display the post only in 'my posts'" do
+        expect(page).to have_content(post1.title)
+        within "#displayed-groups" do
+          expect(page).to_not have_content(post1.title)
+        end
       end
     end
   end

@@ -5,7 +5,7 @@
     <% if @posts.length != 0 %>
       <% @posts.each do |post| %>
         <% if post.onid == current_user %>
-          <% if !post.past? %>
+          <% if !(post.past?) %>
             <%= render partial: "post", :object => post %>
           <% end %>
         <% end %>
@@ -17,15 +17,18 @@
 
 	<h1>Groups</h1>
 
-  <% if @posts.length != 0 %>
-    <% @posts.each do |post| %>
-      <div class="panel-group" id="accordion">
+  <div id="displayed-groups">
+    <% if @posts.length != 0 %>
+      <% @posts.each do |post| %>
         <% if post.today? %>
-          <%= render partial: "post", :object => post %>
+          <div class="panel-group" id="accordion">
+            <%= render partial: "post", :object => post %>
+          </div>
         <% end %>
-      </div>
+      <% end %>
+    <% else %>
+      <%= I18n.t('post.no_posts_message') %>
     <% end %>
-  <% else %>
-    <%= I18n.t('post.no_posts_message') %>
-  <% end %>
+  </div>
+
 </div>
