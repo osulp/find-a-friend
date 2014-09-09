@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "post show" do
-  let(:post) {create(:post)}
+  let(:post) {create(:post, :with_location)}
 
   context "when there is a post entered" do
     before do
@@ -26,7 +26,7 @@ describe "post show" do
         it "should display all the information" do
           expect(page).to have_content(post.title)
           expect(page).to have_content(post.description)
-          expect(page).to have_content(post.location)
+          expect(page).to have_content(post.location.location)
           expect(page).to have_content(post.meeting_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.end_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.recipients)

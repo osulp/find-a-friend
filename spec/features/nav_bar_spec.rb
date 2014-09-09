@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'navbar' do
   
+  let(:location) {create(:location) }
   before do
     visit root_path
   end
@@ -49,9 +50,11 @@ describe 'navbar' do
           end
           context "when creating a new post" do
             before do
+              location
+              visit new_post_path
               fill_in "Title", :with => "test title"
               fill_in "Description", :with => "test description"
-              fill_in "Location", :with => "Test Location"
+              fill_in "Location", :with => location.location
               fill_in "Meeting time", :with => Time.now
               fill_in "End time", :with => Time.now
               click_button "Create Post"

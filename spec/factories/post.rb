@@ -13,5 +13,10 @@ FactoryGirl.define do
         post.recipients = "test@test.com"
       end
     end
+    trait :with_location do
+      after(:build) do |post|
+        post.location = build(:location)
+      end
+    end
   end
 end

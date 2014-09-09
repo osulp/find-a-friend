@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe 'Posts' do
-  let(:post) {create(:post)}
+  let(:post) {create(:post, :with_location)}
+  let(:location) {create(:location) }
 
   context "When logged in" do
   	before do
@@ -23,12 +24,13 @@ describe 'Posts' do
 
     context "when there is a post for a day in the past" do
       before do
+        location
         visit new_post_path
         fill_in "Title", :with => "Test Title"
         fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => "Test Location"
         fill_in "Meeting time", :with => "1990-01-01 12:00:00"
         fill_in "End time", :with => "1999-01-01 12:00:00"
+        fill_in "Location", :with => location.location
         click_button "Create Post"
       end
       it "should not display the post in groups" do
@@ -42,12 +44,13 @@ describe 'Posts' do
     end
     context "when there is a post for a day in the future" do
       before do
+        location
         visit new_post_path
         fill_in "Title", :with => "Test Title"
         fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => "Test Location"
         fill_in "Meeting time", :with => Time.now + 2.day.to_i
         fill_in "End time", :with => Time.now + 3.day.to_i
+        fill_in "Location", :with => location.location
         click_button "Create Post"
       end
       it "should not display the post in groups" do
@@ -74,9 +77,10 @@ describe 'Posts' do
 
       context "after filling all the forms out" do
         before do
+          location
           fill_in "Title", :with => "Test Title"
     	    fill_in "Description", :with => "Test Description"
-    	    fill_in "Location", :with => "Test Location"
+          fill_in "Location", :with => location.location
           fill_in "Meeting time", :with => Time.now
           fill_in "End time", :with => Time.now
     	    click_button "Create Post"
@@ -84,7 +88,7 @@ describe 'Posts' do
         it "should save and display it" do
     	    expect(page).to have_content("Test Title")
     	    expect(page).to have_content("Test Description")
-    	    expect(page).to have_content("Test Location")
+          expect(page).to have_content(location.location)
         end
         context "When trying to edit a post" do
       	  before do
@@ -126,7 +130,7 @@ describe 'Posts' do
           expect(page).to have_content(post.description)
           expect(page).to have_content(post.meeting_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.end_time.strftime(I18n.t('time.formats.default')))
-          expect(page).to have_content(post.location)
+          expect(page).to have_content(post.location.location)
         end
       end
       context "when there is no time set" do
@@ -141,7 +145,7 @@ describe 'Posts' do
           expect(page).to have_content(post.description)
           expect(page).to have_content("No Meeting Time Set")
           expect(page).to have_content("No Ending Time Set")
-          expect(page).to have_content(post.location)
+          expect(page).to have_content(post.location.location)
         end
       end
     end

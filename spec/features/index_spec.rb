@@ -2,7 +2,8 @@ require 'spec_helper'
 require 'factory_girl_rails'
 
 describe "homepage" do
-  let(:post1) {create(:post)}
+  let(:location) {create(:location)}
+  let(:post1) {create(:post, :with_location)}
   before do
     RubyCAS::Filter.fake("testonid")
     visit signin_path
