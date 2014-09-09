@@ -32,7 +32,7 @@ describe 'Posts' do
         click_button "Create Post"
       end
       it "should not display the post in groups" do
-        within "#accordion" do
+        within "#displayed-groups" do
           expect(page).to_not have_content("Test Title")
         end
       end
@@ -51,7 +51,7 @@ describe 'Posts' do
         click_button "Create Post"
       end
       it "should not display the post in groups" do
-        within '#accordion' do
+        within '#displayed-groups' do
           expect(page).to_not have_content("Test Title")
         end
       end
@@ -77,7 +77,7 @@ describe 'Posts' do
         end
         context "When trying to edit a post" do
       	  before do
-            within("#accordion") do
+            within("#displayed-groups") do
       	      click_link "Edit"
             end
       	  end
@@ -93,7 +93,7 @@ describe 'Posts' do
         end
         context "When trying to delete the post" do
       	  before do
-            within("#accordion") do
+            within("#displayed-groups") do
       	      click_link "Delete"
             end
       	  end
