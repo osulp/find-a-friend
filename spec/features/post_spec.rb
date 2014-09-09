@@ -111,7 +111,7 @@ describe 'Posts' do
       end
     end
   end
-  context "When not logged in", :js => true do
+  context "When not logged in" do
     context "when visiting the show view" do
       before do
         visit post_path(post)
