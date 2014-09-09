@@ -74,5 +74,20 @@ describe "homepage" do
         end
       end
     end
+    context "when the post time is nil and logged in as the owner of the post" do
+      before do
+        post1.meeting_time = nil
+        post1.end_time = nil
+        post1.onid = "testonid"
+        post1.save
+        visit root_path
+      end
+      it "should display the post only in 'my posts'" do
+        expect(page).to have_content(post1.title)
+        within "#displayed-groups" do
+          expect(page).to_not have_content(post1.title)
+        end
+      end
+    end
   end
 end
