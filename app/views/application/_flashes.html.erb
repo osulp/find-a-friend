@@ -1,5 +1,13 @@
 <div id="flash">
-	<% flash.each do |key, value| -%>
-		<div class="alert-<%= key %>"><%= value %></div>
-	<% end -%>
+  <div class='row'>
+    <div class='col-xs-1'></div>
+    <div class='col-xs-1-offset col-xs-10 col-xs-1-offset'>
+    	<% flash.each do |key, value| -%>
+        <div class="alert alert-warning alert-dismissible" role="alert" align='center'>
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    		  <%= value %>
+        </div>
+    	<% end -%>
+    </div>
+  </div>
 </div>
