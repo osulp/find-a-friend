@@ -9,8 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require datetime
- *= require jquery.ui.all
  *= require jquery-ui-timepicker-addon
+ *= require typeahead
  *= require_self
  *= require_tree .
  */
