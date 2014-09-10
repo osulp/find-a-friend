@@ -14,7 +14,8 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require jquery-ui-timepicker-addon
-//
+//= require typeahead.bundle
+//= require typeahead
 //= require datetime_picker
 //
 //= require bootstrap
