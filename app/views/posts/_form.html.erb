@@ -4,6 +4,7 @@
       <%= simple_form_for(@post, :html => {:class => "form-horizontal"}) do |f| %>
         <%= f.input :title %>
         <%= f.input :description %>
+        <%= f.input :location %>
         <p><label for="twitter-typeahead">Location</label>
         <input class="twitter-typeahead" id="myTypeahead" type="text" data-provide='typeahead'></p>
         <p><%= f.label :meeting_time %><br>
