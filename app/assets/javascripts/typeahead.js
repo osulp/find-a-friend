@@ -1,9 +1,11 @@
 $(document).ready(function($) {
   var engine = new Bloodhound({
-    name: 'Stuff',
-    local: [{value: "Deluxe Bicycle"}, {value: "Super Deluxe Trampoline"}, {value: "Super Duper Scooter"}],
-    datumTokenizer: function(d) {return Bloodhound.tokenizers.whitespace(d.value);},
-    queryTokenizer: Bloodhound.tokenizers.whitespace
+    datumTokenizer: function(d) {return Bloodhound.tokenizers.whitespace(d.location);},
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    prefetch: {  
+      ttl: 1, 
+      url: '../../admin/locations.json'
+    }
   })
   engine.initialize();
   window.engine = engine
@@ -12,6 +14,8 @@ $(document).ready(function($) {
     highlight: true,
     minLength: 1
   }, {
+      valueKey: 'location',
+      displayKey: 'location',
       source: engine.ttAdapter()
   });
 })

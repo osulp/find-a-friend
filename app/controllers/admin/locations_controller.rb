@@ -5,6 +5,7 @@ class Admin::LocationsController < AdminController
 
   def index
     @location = Location.all
+    respond_with @location
   end
 
   def new
