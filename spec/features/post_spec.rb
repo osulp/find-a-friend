@@ -30,7 +30,7 @@ describe 'Posts' do
         fill_in "Description", :with => "Test Description"
         fill_in "Meeting time", :with => "1990-01-01 12:00:00"
         fill_in "End time", :with => "1999-01-01 12:00:00"
-        fill_in "Location", :with => location.location
+        fill_in "Location", :with => "Location String"
         click_button "Create Post"
       end
       it "should not display the post in groups" do
@@ -50,7 +50,7 @@ describe 'Posts' do
         fill_in "Description", :with => "Test Description"
         fill_in "Meeting time", :with => Time.now + 2.day.to_i
         fill_in "End time", :with => Time.now + 3.day.to_i
-        fill_in "Location", :with => location.location
+        fill_in "Location", :with => "Location String"
         click_button "Create Post"
       end
       it "should not display the post in groups" do
@@ -77,21 +77,21 @@ describe 'Posts' do
 
       context "after filling all the forms out" do
         before do
-          location
+          visit root_path
+          click_link "New post"
           fill_in "Title", :with => "Test Title"
+          fill_in "Location", :with => "Location String"
     	    fill_in "Description", :with => "Test Description"
-          fill_in "Location", :with => location.location
-          fill_in "Meeting time", :with => Time.now
-          fill_in "End time", :with => Time.now
     	    click_button "Create Post"
         end
         it "should save and display it" do
     	    expect(page).to have_content("Test Title")
     	    expect(page).to have_content("Test Description")
-          expect(page).to have_content(location.location)
+    	    expect(page).to have_content("Location String")
         end
         context "When trying to edit a post" do
       	  before do
+            visit root_path
             within("#displayed-groups") do
       	      click_link "Edit"
             end
@@ -130,7 +130,7 @@ describe 'Posts' do
           expect(page).to have_content(post.description)
           expect(page).to have_content(post.meeting_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.end_time.strftime(I18n.t('time.formats.default')))
-          expect(page).to have_content(post.location.location)
+          expect(page).to have_content(post.location)
         end
       end
       context "when there is no time set" do
@@ -145,7 +145,7 @@ describe 'Posts' do
           expect(page).to have_content(post.description)
           expect(page).to have_content("No Meeting Time Set")
           expect(page).to have_content("No Ending Time Set")
-          expect(page).to have_content(post.location.location)
+          expect(page).to have_content(post.location)
         end
       end
     end

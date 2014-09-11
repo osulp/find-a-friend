@@ -26,7 +26,7 @@ describe "post show" do
         it "should display all the information" do
           expect(page).to have_content(post.title)
           expect(page).to have_content(post.description)
-          expect(page).to have_content(post.location.location)
+          expect(page).to have_content(post.location)
           expect(page).to have_content(post.meeting_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.end_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.recipients)

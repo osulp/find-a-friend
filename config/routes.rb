@@ -2,9 +2,10 @@ Blog::Application.routes.draw do
   get "users/new"
   #get 'posts/index'
   resources :posts
-  get '/admin', :to => 'admin#index', :as => "admin_index"
+  get '/admin', :to => "admin#index", :as => "admin_index"
   namespace :admin do
     resources :locations
+    resources :admins
   end
 	
   match '/signin', to: 'sessions#new',	via:'get'

@@ -8,6 +8,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_user
 
+  def admin?(subject)
+    Admin.where(:onid => subject).count > 0
+  end
+  helper_method :admin?
+
   private
 
   def cas_username

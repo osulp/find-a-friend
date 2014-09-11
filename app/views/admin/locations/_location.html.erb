@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <div class="panel-title">
+      <%= link_to "Edit", edit_admin_location_path(location) %>
+      <%= link_to "Delete", admin_location_path(location), :method => :delete %>
+    </div>
+  </div>
+  <div class="panel panel-body">
+    Location: <%= location.location %>
+  </div>
+</div>

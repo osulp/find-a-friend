@@ -15,11 +15,10 @@ describe 'Mailer' do
 
     context "and the post has email recipients without onid checked" do
       before do
-        location
         visit new_post_path
         fill_in "Title", :with => "Test Title"
         fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => location.location
+        fill_in "Location", :with => "Location String"
         fill_in "Meeting time", :with => Time.now
         fill_in "End time", :with => Time.now
         fill_in "Recipients", :with => "Email@test.com"
@@ -32,7 +31,7 @@ describe 'Mailer' do
       end
       context "then when editing the post" do
         before do
-          within("#accordion") do
+          within("#displayed-groups") do
             click_link "Edit"
           end
         end
@@ -56,11 +55,10 @@ describe 'Mailer' do
     end
     context "and the post has email recipients with onid checked" do
       before do
-        location
         visit new_post_path
         fill_in "Title", :with => "Test Title"
         fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => location.location
+        fill_in "Location", :with => "Location String"
         fill_in "Meeting time", :with => Time.now
         fill_in "End time", :with => Time.now
         fill_in "Recipients", :with => "Email@test.com"
@@ -75,7 +73,7 @@ describe 'Mailer' do
       end
       context "then when editing the post" do
         before do
-          within("#accordion") do
+          within("#displayed-groups") do
             click_link "Edit"
           end
         end

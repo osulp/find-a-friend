@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-xs-1"></div>
+  <div class="col-xs-10">
+    <h1>Locations</h1>
+
+    <%= link_to "Add Location", new_admin_location_path %>
+
+    <% if @location.length > 0 %>
+      <% @location.each do |location| %>
+        <%= render :partial => "location", :object => location %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-xs-1"></div>
+</div>

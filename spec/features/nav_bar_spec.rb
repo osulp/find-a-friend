@@ -50,11 +50,11 @@ describe 'navbar' do
           end
           context "when creating a new post" do
             before do
-              location
-              visit new_post_path
+              visit root_path
+              click_link "New post"
               fill_in "Title", :with => "test title"
               fill_in "Description", :with => "test description"
-              fill_in "Location", :with => location.location
+              fill_in "Location", :with => "Location String"
               fill_in "Meeting time", :with => Time.now
               fill_in "End time", :with => Time.now
               click_button "Create Post"

@@ -1,4 +1,4 @@
-class Admin::LocationController < AdminController
+class Admin::LocationsController < AdminController
   respond_to :html, :json
   before_filter :current_user, :only => [:create, :edit, :update, :destroy]
   before_filter :find_location, :only => [:edit, :update, :destroy]
@@ -16,12 +16,13 @@ class Admin::LocationController < AdminController
     else
       flash[:error] = "There was an error in adding the location. Please try again later."
     end
+    respond_with @location, :location => admin_locations_path
   end
   def edit
   end
   def update
     @location.update_attributes(location_params)
-    respond_with @location, :location => admin_location_path
+    respond_with @location, :location => admin_locations_path
   end
   def destroy
     if @location.destroy
