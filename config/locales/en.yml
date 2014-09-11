@@ -5,6 +5,7 @@ en:
       with_weekday: '%a/%m/%d/%y'
   post:
     no_posts_message: "There are currently no groups posted"
+    reply_to_checkbox: "Check to include your ONID email as return address to recipients"
   permission_error:
     error_string: "You do not have sufficient permissions to complete this request"
   time:
