@@ -34,7 +34,7 @@
             </li>
 
             <li>
-              <%= link_to 'Admin', admin_index_path %>
+              <%= link_to 'Admin', admin_index_path if admin?(current_user) %>
             </li>
             <li>
               <%= link_to 'New post', new_post_path %>
