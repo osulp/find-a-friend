@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-xs-1"></div>
+  <div class="col-xs-10">
+    <h1>Admins</h1>
+    <%= link_to "Add an Admin", new_admin_admin_path %>
+    <% if @admin.length != 0 %>
+      <% @admin.each do |admin| %>
+        <%= render :partial => "admin", :object => admin %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="col-xs-1"></div>
+</div>
+

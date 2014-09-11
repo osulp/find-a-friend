@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    <div class="panel-title">
+      <% if current_user != admin.onid %>
+        <%= link_to "Delete", admin_admin_path(admin.id), :method => :delete %>
+      <% end %>
+    </div>
+  </div>
+  <div class="panel panel-body">
+    Onid Username: <%= admin.onid %>
+  </div>
+</div>

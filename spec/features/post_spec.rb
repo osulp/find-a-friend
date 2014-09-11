@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe 'Posts' do
-  let(:post) {create(:post)}
+  let(:post) {create(:post, :with_location)}
+  let(:location) {create(:location) }
 
   context "When logged in" do
   	before do
@@ -23,12 +24,13 @@ describe 'Posts' do
 
     context "when there is a post for a day in the past" do
       before do
+        location
         visit new_post_path
         fill_in "Title", :with => "Test Title"
         fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => "Test Location"
         fill_in "Meeting time", :with => "1990-01-01 12:00:00"
         fill_in "End time", :with => "1999-01-01 12:00:00"
+        fill_in "Location", :with => "Location String"
         click_button "Create Post"
       end
       it "should not display the post in groups" do
@@ -42,12 +44,13 @@ describe 'Posts' do
     end
     context "when there is a post for a day in the future" do
       before do
+        location
         visit new_post_path
         fill_in "Title", :with => "Test Title"
         fill_in "Description", :with => "Test Description"
-        fill_in "Location", :with => "Test Location"
         fill_in "Meeting time", :with => Time.now + 2.day.to_i
         fill_in "End time", :with => Time.now + 3.day.to_i
+        fill_in "Location", :with => "Location String"
         click_button "Create Post"
       end
       it "should not display the post in groups" do
@@ -74,20 +77,21 @@ describe 'Posts' do
 
       context "after filling all the forms out" do
         before do
+          visit root_path
+          click_link "New post"
           fill_in "Title", :with => "Test Title"
+          fill_in "Location", :with => "Location String"
     	    fill_in "Description", :with => "Test Description"
-    	    fill_in "Location", :with => "Test Location"
-          fill_in "Meeting time", :with => Time.now
-          fill_in "End time", :with => Time.now
     	    click_button "Create Post"
         end
         it "should save and display it" do
     	    expect(page).to have_content("Test Title")
     	    expect(page).to have_content("Test Description")
-    	    expect(page).to have_content("Test Location")
+    	    expect(page).to have_content("Location String")
         end
         context "When trying to edit a post" do
       	  before do
+            visit root_path
             within("#displayed-groups") do
       	      click_link "Edit"
             end

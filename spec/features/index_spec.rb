@@ -2,7 +2,8 @@ require 'spec_helper'
 require 'factory_girl_rails'
 
 describe "homepage" do
-  let(:post1) {create(:post)}
+  let(:location) {create(:location)}
+  let(:post1) {create(:post, :with_location)}
   before do
     RubyCAS::Filter.fake("testonid")
     visit signin_path
@@ -84,10 +85,11 @@ describe "homepage" do
     end
     context "when the post time has not passed and when logged in as the owner of the post" do
       before do
-        visit new_post_path
+        visit root_path
+        click_link "New post"
         fill_in "Title", :with => "test title"
         fill_in "Description", :with => "description"
-        fill_in "Location", :with => "location"
+        fill_in "Location", :with => "test location string to input"
         fill_in "Meeting time", :with => (Time.now + 2.day.to_i)
         fill_in "End time", :with => (Time.now + 2.day.to_i)
         click_button "Create Post"

@@ -6,7 +6,7 @@
         <%= f.input :description %>
         <%= f.input :location %>
         <p><label for="twitter-typeahead">Location</label>
-        <input class="twitter-typeahead" id="myTypeahead" type="text" data-provide='typeahead'></p>
+        <input class="twitter-typeahead required" id="myTypeahead" type="text" data-provide='typeahead'></p>
         <p><%= f.label :meeting_time %><br>
         <div class='meeting_input'>
         <%= f.text_field :meeting_time , :class => 'datetime_picker', :value => Time.now.strftime(I18n.t('time.formats.form')) %></p>

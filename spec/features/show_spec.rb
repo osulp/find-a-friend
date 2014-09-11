@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe "post show" do
-  let(:post) {create(:post)}
+  let(:post) {create(:post, :with_location)}
 
   context "when there is a post entered" do
     before do

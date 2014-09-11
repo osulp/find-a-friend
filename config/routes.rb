@@ -2,7 +2,11 @@ Blog::Application.routes.draw do
   get "users/new"
   #get 'posts/index'
   resources :posts
-  resources :users
+  get '/admin', :to => "admin#index", :as => "admin_index"
+  namespace :admin do
+    resources :locations
+    resources :admins
+  end
 	
   match '/signin', to: 'sessions#new',	via:'get'
   match '/signout', to: 'sessions#destroy',	via: [:delete, :get]

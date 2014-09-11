@@ -10,6 +10,7 @@ class PostsController < ApplicationController
 
   def new
     @post = Post.new
+    @locations = Location.all
   end
    
   def create
@@ -34,6 +35,7 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @locations = Location.all
   end
 
   def update
@@ -58,7 +60,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :description, :location, :meeting_time, :end_time, :recipients, :onid, :allow_onid)
+    params.require(:post).permit(:title, :description, :meeting_time, :end_time, :recipients, :onid, :allow_onid, :location)
   end
 
   def find_post

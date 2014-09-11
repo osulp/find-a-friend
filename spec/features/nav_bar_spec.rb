@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'navbar' do
   
+  let(:location) {create(:location) }
   before do
     visit root_path
   end
@@ -49,9 +50,11 @@ describe 'navbar' do
           end
           context "when creating a new post" do
             before do
+              visit root_path
+              click_link "New post"
               fill_in "Title", :with => "test title"
               fill_in "Description", :with => "test description"
-              fill_in "Location", :with => "Test Location"
+              fill_in "Location", :with => "Location String"
               fill_in "Meeting time", :with => Time.now
               fill_in "End time", :with => Time.now
               click_button "Create Post"
@@ -69,6 +72,19 @@ describe 'navbar' do
             it "should return an error and cant be blank error" do
               expect(page).to have_content("can't be blank")
             end
+          end
+        end
+      end
+      context "when logged in as an admin" do
+        let(:admin) {create(:admin)}
+        before do
+          RubyCAS::Filter.fake(admin.onid)
+          visit signin_path
+          visit root_path
+        end
+        it "should link to the admin panel" do
+          within(".navbar") do
+            expect(page).to have_link("Admin")
           end
         end
       end
