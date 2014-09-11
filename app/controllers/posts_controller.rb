@@ -3,6 +3,7 @@ class PostsController < ApplicationController
   before_filter :current_user, :only => [:create, :edit, :update, :destroy]
   before_filter :check_sign_in, :only => [:new, :edit]
   before_filter :find_post, :only => [:edit, :update, :destroy, :show]
+  before_filter :find_decorated_post, :only => [:show]
 
   def index
     @posts = PostDecorator.decorate_collection(Post.all)
@@ -22,12 +23,13 @@ class PostsController < ApplicationController
           flash[:warning] = "Your post will not be displayed to the public until the day of the event"
         end
       end
+      if @post.recipients.present?
+        UserMailer.delay.new_post_email(@post)
+      end
     else
       flash[:error] = "Unable to save your post"
     end
-    if @post.recipients.present?
-      UserMailer.new_post_email(@post).deliver
-    end
+
     respond_with @post, :location => root_path
   end
 
@@ -43,7 +45,7 @@ class PostsController < ApplicationController
       @post.update_attributes(post_params)
     end
     if @post.recipients.present?
-      UserMailer.update_post_email(@post).deliver
+      UserMailer.delay.update_post_email(@post)
     end
     respond_with @post, :location => root_path
   end
@@ -64,6 +66,10 @@ class PostsController < ApplicationController
   end
 
   def find_post
+    @post = Post.find(params[:id])
+  end
+
+  def find_decorated_post
     @post = Post.find(params[:id]).decorate
   end
 	
