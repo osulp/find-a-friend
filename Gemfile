@@ -18,6 +18,7 @@ gem 'bootstrap-sass', '~> 3.1.1'
 # CAS Client
 gem 'rubycas-client', :git => 'git://github.com/terrellt/rubycas-client.git', :branch => 'master'
 gem 'rubycas-client-rails', :git => 'git://github.com/osulp/rubycas-client-rails.git'
+gem 'sidekiq'
 
 group :development do
   gem 'spring'

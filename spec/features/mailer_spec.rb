@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'sidekiq/testing'
+Sidekiq::Testing.inline!
 
 describe 'Mailer' do
   let(:post_with_recipient) {create(:post, :with_recipient)}
