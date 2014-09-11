@@ -5,14 +5,17 @@ class Admin::AdminsController < AdminController
   def index
     @admin = Admin.all
   end
+  
   def new
     @admin= Admin.new
   end
+
   def create
     @admin = Admin.new(admin_params)
     flash[:success] = "Successfully added admin" if @admin.save
     respond_with @admin, :location => admin_admins_path
   end
+
   def destroy
     if @admin.destroy
       flash[:success] = "Successfully deleted admin"
@@ -27,6 +30,7 @@ class Admin::AdminsController < AdminController
   def admin_params
     params.require(:admin).permit(:onid)
   end
+  
   def find_admin
     @admin = Admin.find(params[:id])
   end

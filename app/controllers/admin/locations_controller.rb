@@ -6,9 +6,11 @@ class Admin::LocationsController < AdminController
   def index
     @location = Location.all
   end
+
   def new
     @location = Location.new
   end
+
   def create
     @location = Location.new(location_params)
     if @location.save
@@ -18,12 +20,15 @@ class Admin::LocationsController < AdminController
     end
     respond_with @location, :location => admin_locations_path
   end
+  
   def edit
   end
+  
   def update
     @location.update_attributes(location_params)
     respond_with @location, :location => admin_locations_path
   end
+
   def destroy
     if @location.destroy
       flash[:success] = "Location destroyed"
@@ -38,6 +43,7 @@ class Admin::LocationsController < AdminController
   def location_params
     params.require(:location).permit(:location)
   end
+
   def find_location
     @location = Location.find(params[:id])
   end
