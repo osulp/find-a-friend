@@ -106,6 +106,42 @@ describe 'Posts' do
       	      click_link "Edit"
             end
       	  end
+          context "when making it overlap with another post" do
+            before do
+              @post1 = create(:post, :onid => "testonid", :meeting_time => "2015-01-01 00:00:00", :end_time => "2015-01-02 00:00:00")
+              visit edit_post_path(Post.first)
+            end
+            context "when the post ends after another starts" do
+              before do
+                fill_in "Meeting time", :with => "2014-12-12 00:00:00"
+                fill_in "End time", :with => "2015-01-01 12:00:00"
+                click_button "Update Post"
+              end
+              it "should flash an error" do
+                expect(page).to have_content(I18n.t("post.errors.overlap"))
+              end
+            end
+            context "when the post starts and ends during another post" do
+              before do
+                fill_in "Meeting time", :with => "2015-01-01 01:00:00"
+                fill_in "End time", :with => "2015-01-01 02:00:00"
+                click_button "Update Post"
+              end
+              it "should flash an error" do
+                expect(page).to have_content(I18n.t('post.errors.overlap'))
+              end
+            end
+            context "when the post starts before another ends" do
+              before do
+                fill_in "Meeting time", :with => "2015-01-01 01:00:00"
+                fill_in "End time", :with => "2015-01-02 01:00:00"
+                click_button "Update Post"
+              end
+              it "should flash an error" do
+                expect(page).to have_content(I18n.t('post.errors.overlap'))
+              end
+            end
+          end
       	  context "should let you fill out new information" do
       	    before do
       		    fill_in "Description", :with => "New Description"

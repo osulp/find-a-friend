@@ -16,18 +16,19 @@ class PostsController < ApplicationController
    
   def create
     @post = Post.new(post_params)
+    check_conflict
     if @post.save
-      flash[:success] = "Successfully posted group"
+      flash[:success] = I18n.t("post.success.posting")
       if @post.meeting_time
         if @post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
-          flash[:warning] = "Your post will not be displayed to the public until the day of the event"
+          flash[:warning] = I18n.t("post.warnings.future")
         end
       end
       if @post.recipients.present?
         UserMailer.delay.new_post_email(@post)
       end
     else
-      flash[:error] = "Unable to save your post"
+      flash[:error] = I18n.t("post.errors.posting")
     end
 
     respond_with @post, :location => root_path
@@ -41,6 +42,7 @@ class PostsController < ApplicationController
   end
 
   def update
+    check_conflict
     if @post.onid == current_user
       @post.update_attributes(post_params)
     end
@@ -52,9 +54,9 @@ class PostsController < ApplicationController
 
   def destroy
     if @post.destroy
-      flash[:success] = "Successfully deleted"
+      flash[:success] = I18n.t("post.success.deleting")
     else
-      flash[:error] = "There was a problem in deleting your post"
+      flash[:error] = I18n.t("post.errors.deleting")
     end
     respond_with @post
   end
@@ -75,5 +77,22 @@ class PostsController < ApplicationController
 	
   def check_sign_in
     redirect_to signin_path if current_user.nil?
+  end
+
+  def check_conflict
+    @user_posts = Post.where(:onid => @post.onid)
+    flash[:error] = I18n.t('post.errors.overlap') if conflict(@user_posts, @post)
+  end
+
+  def conflict(user_posts, subject)
+    user_posts.each do |post| 
+      if(((post.meeting_time < subject.meeting_time) && (subject.meeting_time < post.end_time)) && ((post.meeting_time < subject.end_time) && (subject.end_time < post.meeting_time)))
+        return true
+      elsif((subject.meeting_time < post.meeting_time) && (post.meeting_time < subject.end_time))
+        return true
+      elsif((subject.meeting_time < post.end_time) && (post.end_time < subject.end_time))
+        return true
+      end
+    end
   end
 end
