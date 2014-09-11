@@ -9,6 +9,20 @@ describe "homepage" do
     visit signin_path
     visit root_path
   end
+  context "when logged in as an admin" do
+    before do
+      create(:admin, :onid => "testonid")
+      visit root_path
+    end
+    it "should link to the admin page" do
+      expect(page).to have_link("Admin")
+    end
+  end
+  context "when not logged in as an admin" do
+    it "should not have a link to the admin page" do
+      expect(page).to_not have_link("Admin")
+    end
+  end
   context "when there are no posts" do
     it "should display a message" do
       expect(page).to have_content(I18n.t('post.no_posts_message'))
