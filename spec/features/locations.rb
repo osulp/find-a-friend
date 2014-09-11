@@ -43,7 +43,7 @@ describe "locations" do
       expect(page).to have_content("location text", :count => 2)
     end
   end
-  context "when creating an art piece from the ui with a location input" do
+  context "when creating a post from the ui with a location input" do
     before do
       location
       visit root_path

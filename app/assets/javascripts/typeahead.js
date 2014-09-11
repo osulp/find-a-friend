@@ -2,9 +2,8 @@ $(document).ready(function($) {
   var engine = new Bloodhound({
     datumTokenizer: function(d) {return Bloodhound.tokenizers.whitespace(d.location);},
     queryTokenizer: Bloodhound.tokenizers.whitespace,
-    prefetch: {
-      // url points to a json file that contains an array of country names, see
-      // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+    prefetch: {  
+      ttl: 1, 
       url: '../../admin/locations.json'
     }
   })
