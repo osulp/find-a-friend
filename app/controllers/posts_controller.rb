@@ -16,21 +16,24 @@ class PostsController < ApplicationController
    
   def create
     @post = Post.new(post_params)
-    if @post.save
-      flash[:success] = "Successfully posted group"
-      if @post.meeting_time
-        if @post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
-          flash[:warning] = "Your post will not be displayed to the public until the day of the event"
+    if check_conflict
+      if @post.save
+        flash[:success] = I18n.t("post.success.posting")
+        if @post.meeting_time
+          if @post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
+            flash[:warning] = I18n.t("post.warnings.future")
+          end
         end
+      else
+        flash[:error] = I18n.t("post.errors.posting")
       end
       if @post.recipients.present?
         UserMailer.delay.new_post_email(@post)
       end
+      respond_with @post, :location => root_path
     else
-      flash[:error] = "Unable to save your post"
+      respond_with @post, :location => new_post_path(@post)
     end
-
-    respond_with @post, :location => root_path
   end
 
   def show
@@ -41,20 +44,25 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.onid == current_user
-      @post.update_attributes(post_params)
+    @post.attributes = post_params
+    if check_conflict
+      if @post.onid == current_user
+        @post.save
+      end
+      if @post.recipients.present?
+        UserMailer.delay.update_post_email(@post)
+      end
+      respond_with @post, :location => root_path
+    else
+      respond_with @post, :location => edit_post_path(@post)
     end
-    if @post.recipients.present?
-      UserMailer.delay.update_post_email(@post)
-    end
-    respond_with @post, :location => root_path
   end
 
   def destroy
     if @post.destroy
-      flash[:success] = "Successfully deleted"
+      flash[:success] = I18n.t("post.success.deleting")
     else
-      flash[:error] = "There was a problem in deleting your post"
+      flash[:error] = I18n.t("post.errors.deleting")
     end
     respond_with @post
   end
@@ -75,5 +83,28 @@ class PostsController < ApplicationController
 	
   def check_sign_in
     redirect_to signin_path if current_user.nil?
+  end
+
+  def check_conflict
+    @user_posts = Post.where(:onid => current_user)
+    if @user_posts.length > 0 && !@user_posts.nil?
+      if conflict(@user_posts, @post)
+        flash[:error] = I18n.t('post.errors.overlap')
+        return false
+      else
+        return true
+      end
+    else
+      return true
+    end
+  end
+
+  def conflict(user_posts, post2)
+    user_posts.each do |post1| 
+      unless post1.id == post2.id
+        return true if post2.meeting_time <= post1.end_time && post1.meeting_time <= post2.end_time
+      end
+    end
+    return false
   end
 end

@@ -92,6 +92,8 @@ describe 'Posts' do
           fill_in "Title", :with => "Test Title"
           fill_in "Location", :with => "Location String"
     	    fill_in "Description", :with => "Test Description"
+          fill_in "Meeting time", :with => Time.current
+          fill_in "End time", :with => Time.current
     	    click_button "Create Post"
         end
         it "should save and display it" do
@@ -106,6 +108,49 @@ describe 'Posts' do
       	      click_link "Edit"
             end
       	  end
+          context "when making it overlap with another post" do
+            before do
+              visit new_post_path
+              fill_in "Title", :with => "testtitle1"
+              fill_in "Description", :with => "testdescription1"
+              fill_in "Location", :with => "testlocation1"
+              fill_in "Meeting time", :with => (DateTime.current + 6.hours)
+              fill_in "End time", :with => (DateTime.current + 9.hours)
+              click_button "Create Post"
+            end
+            context "from update" do
+              before do
+                visit new_post_path
+                fill_in "Title", :with => "testtitle"
+                fill_in "Description", :with => "testdescription"
+                fill_in "Location", :with => "testlocation"
+                fill_in "Meeting time", :with => "2000-01-01 00:00:00"
+                fill_in "End time", :with => "2000-01-01 00:00:00"
+                click_button "Create Post"
+                visit edit_post_path(Post.last)
+                fill_in "Meeting time", :with => (DateTime.current + 7.hours)
+                fill_in "End time", :with => (DateTime.current + 8.hours)
+                click_button "Update Post"
+              end
+              it "should flash and overlap error" do
+                expect(page).to have_content(I18n.t('post.errors.overlap'))
+              end
+            end
+            context "from create" do
+              before do
+                visit new_post_path
+                fill_in "Title", :with => "testtitle"
+                fill_in "Description", :with => "testdescription"
+                fill_in "Location", :with => "testlocation"
+                fill_in "Meeting time", :with => (DateTime.current + 7.hours)
+                fill_in "End time", :with => (DateTime.current + 8.hours)
+                click_button "Create Post"
+              end
+              it "should flash an error" do
+                expect(page).to have_content(I18n.t('post.errors.overlap'))
+              end
+            end
+          end
       	  context "should let you fill out new information" do
       	    before do
       		    fill_in "Description", :with => "New Description"
