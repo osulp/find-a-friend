@@ -87,14 +87,10 @@ class PostsController < ApplicationController
 
   def check_conflict
     @user_posts = Post.where(:onid => current_user)
-    if !@user_posts.nil?
-      if @user_posts.length > 0
-        if conflict(@user_posts, @post)
-          flash[:error] = I18n.t('post.errors.overlap')
-          return false
-        else
-          return true
-        end
+    if @user_posts.length > 0 && !@user_posts.nil?
+      if conflict(@user_posts, @post)
+        flash[:error] = I18n.t('post.errors.overlap')
+        return false
       else
         return true
       end
