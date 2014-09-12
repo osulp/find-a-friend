@@ -92,6 +92,8 @@ describe 'Posts' do
           fill_in "Title", :with => "Test Title"
           fill_in "Location", :with => "Location String"
     	    fill_in "Description", :with => "Test Description"
+          fill_in "Meeting time", :with => Time.current
+          fill_in "End time", :with => Time.current
     	    click_button "Create Post"
         end
         it "should save and display it" do
