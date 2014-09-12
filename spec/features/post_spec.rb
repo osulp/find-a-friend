@@ -108,34 +108,41 @@ describe 'Posts' do
       	  end
           context "when making it overlap with another post" do
             before do
-              @post1 = create(:post, :onid => "testonid", :meeting_time => "2015-01-01 00:00:00", :end_time => "2015-01-02 00:00:00")
-              visit edit_post_path(Post.first)
+              visit new_post_path
+              fill_in "Title", :with => "testtitle1"
+              fill_in "Description", :with => "testdescription1"
+              fill_in "Location", :with => "testlocation1"
+              fill_in "Meeting time", :with => (DateTime.current + 6.hours)
+              fill_in "End time", :with => (DateTime.current + 9.hours)
+              click_button "Create Post"
             end
-            context "when the post ends after another starts" do
+            context "from update" do
               before do
-                fill_in "Meeting time", :with => "2014-12-12 00:00:00"
-                fill_in "End time", :with => "2015-01-01 12:00:00"
+                visit new_post_path
+                fill_in "Title", :with => "testtitle"
+                fill_in "Description", :with => "testdescription"
+                fill_in "Location", :with => "testlocation"
+                fill_in "Meeting time", :with => "2000-01-01 00:00:00"
+                fill_in "End time", :with => "2000-01-01 00:00:00"
+                click_button "Create Post"
+                visit edit_post_path(Post.last)
+                fill_in "Meeting time", :with => (DateTime.current + 7.hours)
+                fill_in "End time", :with => (DateTime.current + 8.hours)
                 click_button "Update Post"
               end
-              it "should flash an error" do
-                expect(page).to have_content(I18n.t("post.errors.overlap"))
-              end
-            end
-            context "when the post starts and ends during another post" do
-              before do
-                fill_in "Meeting time", :with => "2015-01-01 01:00:00"
-                fill_in "End time", :with => "2015-01-01 02:00:00"
-                click_button "Update Post"
-              end
-              it "should flash an error" do
+              it "should flash and overlap error" do
                 expect(page).to have_content(I18n.t('post.errors.overlap'))
               end
             end
-            context "when the post starts before another ends" do
+            context "from create" do
               before do
-                fill_in "Meeting time", :with => "2015-01-01 01:00:00"
-                fill_in "End time", :with => "2015-01-02 01:00:00"
-                click_button "Update Post"
+                visit new_post_path
+                fill_in "Title", :with => "testtitle"
+                fill_in "Description", :with => "testdescription"
+                fill_in "Location", :with => "testlocation"
+                fill_in "Meeting time", :with => (DateTime.current + 7.hours)
+                fill_in "End time", :with => (DateTime.current + 8.hours)
+                click_button "Create Post"
               end
               it "should flash an error" do
                 expect(page).to have_content(I18n.t('post.errors.overlap'))

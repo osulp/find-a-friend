@@ -16,22 +16,24 @@ class PostsController < ApplicationController
    
   def create
     @post = Post.new(post_params)
-    check_conflict
-    if @post.save
-      flash[:success] = I18n.t("post.success.posting")
-      if @post.meeting_time
-        if @post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
-          flash[:warning] = I18n.t("post.warnings.future")
+    if check_conflict
+      if @post.save
+        flash[:success] = I18n.t("post.success.posting")
+        if @post.meeting_time
+          if @post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
+            flash[:warning] = I18n.t("post.warnings.future")
+          end
         end
+      else
+        flash[:error] = I18n.t("post.errors.posting")
       end
       if @post.recipients.present?
         UserMailer.delay.new_post_email(@post)
       end
+      respond_with @post, :location => root_path
     else
-      flash[:error] = I18n.t("post.errors.posting")
+      respond_with @post, :location => new_post_path(@post)
     end
-
-    respond_with @post, :location => root_path
   end
 
   def show
@@ -42,14 +44,18 @@ class PostsController < ApplicationController
   end
 
   def update
-    check_conflict
-    if @post.onid == current_user
-      @post.update_attributes(post_params)
+    @post.attributes = post_params
+    if check_conflict
+      if @post.onid == current_user
+        @post.save
+      end
+      if @post.recipients.present?
+        UserMailer.delay.update_post_email(@post)
+      end
+      respond_with @post, :location => root_path
+    else
+      respond_with @post, :location => edit_post_path(@post)
     end
-    if @post.recipients.present?
-      UserMailer.delay.update_post_email(@post)
-    end
-    respond_with @post, :location => root_path
   end
 
   def destroy
@@ -80,19 +86,29 @@ class PostsController < ApplicationController
   end
 
   def check_conflict
-    @user_posts = Post.where(:onid => @post.onid)
-    flash[:error] = I18n.t('post.errors.overlap') if conflict(@user_posts, @post)
-  end
-
-  def conflict(user_posts, subject)
-    user_posts.each do |post| 
-      if(((post.meeting_time < subject.meeting_time) && (subject.meeting_time < post.end_time)) && ((post.meeting_time < subject.end_time) && (subject.end_time < post.meeting_time)))
-        return true
-      elsif((subject.meeting_time < post.meeting_time) && (post.meeting_time < subject.end_time))
-        return true
-      elsif((subject.meeting_time < post.end_time) && (post.end_time < subject.end_time))
+    @user_posts = Post.where(:onid => current_user)
+    if !@user_posts.nil?
+      if @user_posts.length > 0
+        if conflict(@user_posts, @post)
+          flash[:error] = I18n.t('post.errors.overlap')
+          return false
+        else
+          return true
+        end
+      else
         return true
       end
+    else
+      return true
     end
+  end
+
+  def conflict(user_posts, post2)
+    user_posts.each do |post1| 
+      unless post1.id == post2.id
+        return true if post2.meeting_time <= post1.end_time && post1.meeting_time <= post2.end_time
+      end
+    end
+    return false
   end
 end

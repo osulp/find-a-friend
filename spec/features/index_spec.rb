@@ -66,8 +66,8 @@ describe "homepage" do
         context "when the month has passed" do
           before do
             post1.onid = "testonid"
-            post1.meeting_time = (Time.now - 1.month.to_i)
-            post1.end_time = (Time.now - 1.month.to_i)
+            post1.meeting_time = (Time.current - 1.months)
+            post1.end_time = (Time.current - 1.months)
             post1.save
             visit root_path
           end
@@ -78,8 +78,8 @@ describe "homepage" do
         context "when the day has passed" do
           before do
             post1.onid = "testonid"
-            post1.meeting_time = (Time.now - 1.day.to_i)
-            post1.end_time = (Time.now - 1.day.to_i)
+            post1.meeting_time = (Time.current - 1.days)
+            post1.end_time = (Time.current - 1.days)
             post1.save
             visit root_path
           end
@@ -103,9 +103,9 @@ describe "homepage" do
         click_link "New post"
         fill_in "Title", :with => "test title"
         fill_in "Description", :with => "description"
+        fill_in "Meeting time", :with => (DateTime.current.midnight+2.days).strftime(I18n.t('time.formats.default'))
+        fill_in "End time", :with => (DateTime.current.midnight+2.days).strftime(I18n.t('time.formats.default'))
         fill_in "Location", :with => "test location string to input"
-        fill_in "Meeting time", :with => (Time.now + 2.day.to_i)
-        fill_in "End time", :with => (Time.now + 2.day.to_i)
         click_button "Create Post"
         visit root_path
       end
