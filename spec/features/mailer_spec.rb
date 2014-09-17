@@ -24,6 +24,7 @@ describe 'Mailer' do
         fill_in "Meeting time", :with => Time.now
         fill_in "End time", :with => Time.now
         fill_in "Recipients", :with => "Email@test.com"
+        uncheck I18n.t("post.reply_to_checkbox")
         click_button "Create Post"
       end
       it "should send the email" do
@@ -42,6 +43,7 @@ describe 'Mailer' do
           context "after changing info in the post" do
             before do
               fill_in "Title", :with => "New Title"
+              uncheck I18n.t("post.reply_to_checkbox")
               click_button "Update Post"
             end
             it "should send a new email with the new information" do
@@ -64,7 +66,6 @@ describe 'Mailer' do
         fill_in "Meeting time", :with => Time.now
         fill_in "End time", :with => Time.now
         fill_in "Recipients", :with => "Email@test.com"
-        check I18n.t("post.reply_to_checkbox")
         click_button "Create Post"
       end
       it "should send the email" do
