@@ -15,6 +15,13 @@ en:
       deleting: "There was an problem in deleting your post"
     no_posts_message: "There are currently no groups posted"
     reply_to_checkbox: "Check to include your ONID email as return address to recipients"
+    email_instructions: "(email addresses should be seperated by commas)"
+    delete_string: "Are you sure that you want to delete this post?"
+  admin:
+    admins:
+      delete_string: "Are you sure that you want to delete this admin?"
+    locations:
+      delete_string: "Are you sure that you want to delete this location?"
   permission_error:
     error_string: "You do not have sufficient permissions to complete this request"
   time:
