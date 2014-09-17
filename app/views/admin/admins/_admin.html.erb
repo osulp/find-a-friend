@@ -2,7 +2,7 @@
   <div class="panel panel-heading">
     <div class="panel-title">
       <% if current_user != admin.onid %>
-        <%= link_to "Delete", admin_admin_path(admin.id), :method => :delete %>
+        <%= link_to "Delete", admin_admin_path(admin.id), :method => :delete, :data => {:confirm => I18n.t('admin.admins.delete_string')} %>
       <% end %>
     </div>
   </div>

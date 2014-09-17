@@ -4,7 +4,7 @@
       <%= link_to post.title, post_path(post) %>
       <% if current_user == post.onid && !(current_user == nil) %>
         <%= link_to "Edit", edit_post_path(post), :class => "pull-right", :style => "padding-left: 10px;" %>
-        <%= link_to "Delete", post_path(post), :class => "pull-right", :method => :delete, :data => {:confirm => "Are you sure?"} %>
+        <%= link_to "Delete", post_path(post), :class => "pull-right", :method => :delete, :data => {:confirm => I18n.t("post.delete_string")} %>
       <% end %>
     </div>
   </div>

@@ -25,7 +25,8 @@ describe "homepage" do
   end
   context "when there are no posts" do
     it "should display a message" do
-      expect(page).to have_content(I18n.t('post.no_posts_message'))
+      expect(page).to have_content(I18n.t('post.my_posts.no_posts_message'))
+      expect(page).to have_content(I18n.t('post.all_posts.no_posts_message'))
     end
   end
   context "when there are posts entered" do

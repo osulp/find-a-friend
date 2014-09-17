@@ -13,8 +13,29 @@ en:
       overlap: "This post's time is in conflict with another group that you have created"
       posting: "Unable to save your post"
       deleting: "There was an problem in deleting your post"
-    no_posts_message: "There are currently no groups posted"
+    all_posts:
+      no_posts_message: "There are currently no groups posted"
+    my_posts:
+      no_posts_message: "There are currently no groups posted"
     reply_to_checkbox: "Check to include your ONID email as return address to recipients"
+    email_instructions: "(email addresses should be seperated by commas)"
+    delete_string: "Are you sure that you want to delete this post?"
+  admin:
+    admins:
+      success:
+        deleting: "Successfully deleted admin"
+        creating: "Admin successfully added"
+      error:
+        deleting: "There was an error deleting the admin. Please try again later."
+      delete_string: "Are you sure that you want to delete this admin?"
+    locations:
+      success:
+        creating: "Successfully added location"
+        deleting: "Successfully deleted location"
+      error:
+        creating: "There was a problem in adding this location. Please try again later."
+        deleting: "There was a problem in deleting this location. Please try again later."
+      delete_string: "Are you sure that you want to delete this location?"
   permission_error:
     error_string: "You do not have sufficient permissions to complete this request"
   time:
