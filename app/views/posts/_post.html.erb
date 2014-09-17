@@ -1,15 +1,11 @@
 <div class="panel panel-default">
   <div class="panel panel-heading">
     <div class="panel-title">
-      <div class="row">
-        <div class="col-xs-11">
-          <h4><%= link_to post.title, post_path(post) %></h4>
-        </div>
-        <div class="col-xs-1">
-          <%= link_to "Edit", edit_post_path(post), :class => "pull-right" if current_user == post.onid && !current_user.nil? %>
-          <%= link_to "Delete", post_path(post), :class => "pull-right", :method => :delete, :data => {:confirm => "Are you sure?"} if current_user == post.onid && !current_user.nil? %>
-        </div>
-      </div>
+      <%= link_to post.title, post_path(post) %>
+      <% if current_user == post.onid && !(current_user == nil) %>
+        <%= link_to "Edit", edit_post_path(post), :class => "pull-right", :style => "padding-left: 10px;" %>
+        <%= link_to "Delete", post_path(post), :class => "pull-right", :method => :delete, :data => {:confirm => "Are you sure?"} %>
+      <% end %>
     </div>
   </div>
   <div class="panel panel-body">
