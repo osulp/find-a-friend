@@ -3,6 +3,8 @@
 
   <div class="panel panel-default">
     <div class="panel-body">
+      <%= link_to 'Edit', edit_post_path(@post), :class => "pull-right", :style => "padding-left: 10px;" if @post.onid == current_user %>
+      <%= link_to "Delete", post_path(@post), :class => "pull-right", :method => :delete, :data => {:confirm => "Are you sure?"} %>
       Group Description: <%= @post.description %>
       <br>
       Location: <%= @post.location %>
@@ -21,9 +23,4 @@
   </div>
 
   <%= link_to 'Back', posts_path %>
-
-  <% if @post.onid == current_user %>
-    <br>
-    <%= link_to 'Edit', edit_post_path(@post) %>
-  <% end %>
 </div>
