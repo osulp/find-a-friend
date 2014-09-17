@@ -15,9 +15,9 @@ class Admin::LocationsController < AdminController
   def create
     @location = Location.new(location_params)
     if @location.save
-      flash[:success] = "Successfully added location"
+      flash[:success] = I18n.t("admin.locations.success.creating")
     else
-      flash[:error] = "There was an error in adding the location. Please try again later."
+      flash[:error] = I18n.t("admin.locations.error.creating")
     end
     respond_with @location, :location => admin_locations_path
   end
@@ -32,9 +32,9 @@ class Admin::LocationsController < AdminController
 
   def destroy
     if @location.destroy
-      flash[:success] = "Location destroyed"
+      flash[:success] = I18n.t("admin.locations.success.deleting")
     else
-      flash[:error] = "There was an error in deleting the location. Please try again later."
+      flash[:error] = I18n.t("admin.locations.error.deleting")
     end
     respond_with [:admin, @location]
   end

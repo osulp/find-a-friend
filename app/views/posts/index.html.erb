@@ -11,7 +11,7 @@
         <% end %>
       <% end %>
     <% else %>
-        You have not created any groups
+      <%= I18n.t("post.my_posts.no_post_message") %>
     <% end %>
   <% end %>
 
@@ -27,7 +27,7 @@
         <% end %>
       <% end %>
     <% else %>
-      <%= I18n.t('post.no_posts_message') %>
+      <%= I18n.t('post.all_posts.no_posts_message') %>
     <% end %>
   </div>
 

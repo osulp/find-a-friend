@@ -102,7 +102,7 @@ describe "admin panel" do
         click_link "Delete"
       end
       it "should delete the location" do
-        expect(page).to have_content("Location destroyed")
+        expect(page).to have_content(I18n.t("admin.locations.success.deleting"))
         expect(page).to_not have_content(location.location)
       end
     end

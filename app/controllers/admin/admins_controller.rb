@@ -12,15 +12,15 @@ class Admin::AdminsController < AdminController
 
   def create
     @admin = Admin.new(admin_params)
-    flash[:success] = "Successfully added admin" if @admin.save
+    flash[:success] = I18n.t("admin.admins.success.creating") if @admin.save
     respond_with @admin, :location => admin_admins_path
   end
 
   def destroy
     if @admin.destroy
-      flash[:success] = "Successfully deleted admin"
+      flash[:success] = I18n.t("admin.admins.success.deleting")
     else
-      flash[:error] = "There was an error in deleting the admin. Please try again later."
+      flash[:error] = I18n.t("admin.admins.error.deleting")
     end
     respond_with [:admin, @admin]
   end
