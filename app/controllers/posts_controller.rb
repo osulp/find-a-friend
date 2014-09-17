@@ -82,7 +82,7 @@ class PostsController < ApplicationController
   end
 	
   def check_sign_in
-    redirect_to signin_path if current_user.nil?
+    redirect_to signin_path(:source => request.original_url) if current_user.nil?
   end
 
   def check_conflict
