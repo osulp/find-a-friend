@@ -4,6 +4,7 @@
   <h4><% if @post.onid == current_user %>
     <br>
     <%= link_to 'Edit', edit_post_path(@post) %>
+    <%= link_to 'Delete', post_path(@post), :method => :delete, :data => {:confirm => "Are you sure?"} %>
   <% end %></h4>
 
   <div class="panel panel-default">
