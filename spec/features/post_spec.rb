@@ -186,6 +186,7 @@ describe 'Posts' do
           expect(page).to have_content(post.meeting_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.end_time.strftime(I18n.t('time.formats.default')))
           expect(page).to have_content(post.location)
+          expect(page).to_not have_content("Recipients:")
         end
       end
       context "when there is no time set" do
@@ -201,6 +202,7 @@ describe 'Posts' do
           expect(page).to have_content("No Meeting Time Set")
           expect(page).to have_content("No Ending Time Set")
           expect(page).to have_content(post.location)
+          expect(page).to_not have_content("Recipients:")
         end
       end
     end
