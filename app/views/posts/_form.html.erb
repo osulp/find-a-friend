@@ -13,7 +13,7 @@
         <div class='end_input'>
         <%= f.text_field :end_time , :class => 'datetime_picker', :value => (Time.now + 12.hour.to_i).strftime(I18n.t('time.formats.form'))  %></p>
         </div>
-        <%= f.input :recipients %>(comma or space delimit email addresses)
+        <%= f.input :recipients %><h4>(Email addresses should be seperated via comma)</h4>
         <%= f.input :allow_onid, :label => I18n.t("post.reply_to_checkbox") %>
         <%= f.hidden_field :onid, :value => current_user %>
         <%= f.button :submit %>
