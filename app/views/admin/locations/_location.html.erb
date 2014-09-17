@@ -1,9 +1,7 @@
 <div class="panel panel-default">
-  <div class="panel panel-heading">
-    <div class="panel-title">
-      Location: <%= location.location %>
-      <%= link_to "Edit", edit_admin_location_path(location), :class => "pull-right", :style => "padding-left: 10px;" %>
-      <%= link_to "Delete", admin_location_path(location), :class => "pull-right", :method => :delete, :data => {:confirm => "Are you sure?"} %>
-    </div>
+  <div class="panel panel-body">
+    Location: <%= location.location %>
+    <%= link_to "Edit", edit_admin_location_path(location), :class => "pull-right", :style => "padding-left: 10px;" %>
+    <%= link_to "Delete", admin_location_path(location), :class => "pull-right", :method => :delete, :data => {:confirm => "Are you sure?"} %>
   </div>
 </div>
