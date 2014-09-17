@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140910170948) do
+ActiveRecord::Schema.define(version: 20140917212153) do
 
   create_table "admins", force: true do |t|
     t.string   "onid"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20140910170948) do
     t.datetime "end_time"
     t.string   "location"
     t.string   "onid"
-    t.boolean  "allow_onid"
+    t.boolean  "allow_onid",   default: true
   end
 
   add_index "posts", ["location"], name: "index_posts_on_location"
