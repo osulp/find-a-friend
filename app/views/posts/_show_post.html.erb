@@ -12,7 +12,7 @@
       Ending Time: <%= @post.FormatEndingTime %>
       <br>
       <% unless @post.recipients.blank? %>
-        <% if current_user == @post.onid || @post.recipients.split(' ,').include?("#{current_user}@onid.oregonstate.edu") %>
+        <% if @post.recipient_onids.include?(current_user) %>
           Recipients: <%= @post.recipients %>
         <% end %>
       <% end %>

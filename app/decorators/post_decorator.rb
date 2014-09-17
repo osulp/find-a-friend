@@ -26,6 +26,10 @@ class PostDecorator < Draper::Decorator
     end
   end
 
+  def recipient_onids
+    recipients.split(",").map{|x| x.strip.split("@").first} | [onid]
+  end
+
   def date_passed(object_date)
     if object_date.year.to_i < Time.now.year.to_i
       return true
