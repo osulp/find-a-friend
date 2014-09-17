@@ -1,6 +1,11 @@
 <div class="col-xs-10">
   <h1><%= @post.title %></h1>
 
+  <h4><% if @post.onid == current_user %>
+    <br>
+    <%= link_to 'Edit', edit_post_path(@post) %>
+  <% end %></h4>
+
   <div class="panel panel-default">
     <div class="panel-body">
       Group Description: <%= @post.description %>
@@ -22,8 +27,4 @@
 
   <%= link_to 'Back', posts_path %>
 
-  <% if @post.onid == current_user %>
-    <br>
-    <%= link_to 'Edit', edit_post_path(@post) %>
-  <% end %>
 </div>
