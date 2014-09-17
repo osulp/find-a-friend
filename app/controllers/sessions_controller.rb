@@ -2,7 +2,6 @@ class SessionsController < ApplicationController
   before_filter RubyCAS::Filter, :except => :logout
   
   def new
-    binding.pry
     path = params[:source] || root_path
     redirect_to path
   end
