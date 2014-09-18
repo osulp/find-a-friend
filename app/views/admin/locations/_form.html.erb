@@ -1,4 +1,6 @@
-<%= simple_form_for([:admin, @location], :html => {:class => 'form-horizontal'}) do |f| %>
+<%= simple_form_for([:admin, @location], :html => {:class => 'form-horizontal', :multipart => true}) do |f| %>
   <%= f.input :location %>
+  <%= f.input :photo, :as => :file, :required => false %>
+  <%= image_tag f.object.photo_url(:thumb) if f.object.photo_url %>
   <%= f.button :submit %>
 <% end %>
