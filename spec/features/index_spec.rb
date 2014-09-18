@@ -101,7 +101,7 @@ describe "homepage" do
     context "when the post time has not passed and when logged in as the owner of the post" do
       before do
         visit root_path
-        click_link "New post"
+        click_link "Post a New Group"
         fill_in "Title", :with => "test title"
         fill_in "Description", :with => "description"
         fill_in "Meeting time", :with => (DateTime.current.midnight+2.days).strftime(I18n.t('time.formats.default'))

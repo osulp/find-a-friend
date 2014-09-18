@@ -31,7 +31,7 @@ describe "locations" do
   end
   context "when creating the post from the ui" do
     before do
-      click_link "New post"
+      click_link "Post a New Group"
       fill_in "Title", :with => "title text"
       fill_in "Description", :with => "description text"
       fill_in "Location", :with => "location text"
@@ -47,7 +47,7 @@ describe "locations" do
     before do
       location
       visit root_path
-      click_link "New post"
+      click_link "Post a New Group"
       fill_in "Title", :with => "title text"
       fill_in "Description", :with => "description text"
       fill_in "Location", :with => location.location
