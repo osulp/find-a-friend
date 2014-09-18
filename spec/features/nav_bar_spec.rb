@@ -43,7 +43,7 @@ describe 'navbar' do
         end
         context "when adding a new post" do
           before do
-            click_link "New post"
+            click_link "Post a New Group"
           end
           it "should show the new post page" do
             expect(page).to_not have_content(I18n.t("permission_error.error_string"))
@@ -51,7 +51,7 @@ describe 'navbar' do
           context "when creating a new post" do
             before do
               visit root_path
-              click_link "New post"
+              click_link "Post a New Group"
               fill_in "Title", :with => "test title"
               fill_in "Description", :with => "test description"
               fill_in "Location", :with => "Location String"

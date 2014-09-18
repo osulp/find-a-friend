@@ -88,7 +88,7 @@ describe 'Posts' do
       context "after filling all the forms out" do
         before do
           visit root_path
-          click_link "New post"
+          click_link "Post a New Group"
           fill_in "Title", :with => "Test Title"
           fill_in "Location", :with => "Location String"
     	    fill_in "Description", :with => "Test Description"
