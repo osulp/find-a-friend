@@ -1,6 +1,7 @@
 <div class="panel panel-default">
   <div class="panel panel-body">
     Location: <%= location.location %>
+    <%= image_tag location.photo_url(:thumb) %>
     <%= link_to "Edit", edit_admin_location_path(location), :class => "pull-right", :style => "padding-left: 10px;" %>
     <%= link_to "Delete", admin_location_path(location), :class => "pull-right", :method => :delete, :data => {:confirm => I18n.t("admin.locations.delete_string")} %>
   </div>

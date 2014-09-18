@@ -2,11 +2,12 @@ require 'spec_helper'
 
 describe "locations" do
   let(:location) {create(:location)}
+  let(:admin) {create(:admin)}
   let(:post) {create(:post, :with_location)}
   let(:post1) {create(:post)}
 
   before do
-    RubyCAS::Filter.fake("testonid")
+    RubyCAS::Filter.fake(admin.onid)
     visit signin_path
     visit root_path
   end
@@ -57,6 +58,17 @@ describe "locations" do
       expect(page).to have_content("title text", :count => 2)
       expect(page).to have_content("description text", :count => 2)
       expect(page).to have_content(location.location, :count => 2)
+    end
+  end
+  context "When creating a location with a photo" do
+    before do
+      visit new_admin_location_path
+      fill_in "* Location", :with => "Stuff"
+      attach_file("location_photo", "spec/fixtures/cats.jpg")
+      click_button "Create Location"
+    end
+    it "should save and display it" do
+      expect(page).to have_css('img')
     end
   end
 end

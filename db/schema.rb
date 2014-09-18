@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140917212153) do
+ActiveRecord::Schema.define(version: 20140918171530) do
 
   create_table "admins", force: true do |t|
     t.string   "onid"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140917212153) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "post_id"
+    t.string   "photo"
   end
 
   add_index "locations", ["post_id"], name: "index_locations_on_post_id"

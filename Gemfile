@@ -19,6 +19,9 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem 'rubycas-client', :git => 'git://github.com/terrellt/rubycas-client.git', :branch => 'master'
 gem 'rubycas-client-rails', :git => 'git://github.com/osulp/rubycas-client-rails.git'
 gem 'sidekiq'
+#For photo uploaders
+gem 'carrierwave'
+gem 'rmagick', '~> 2.13.2', :require => false
 
 group :development do
   gem 'spring'
