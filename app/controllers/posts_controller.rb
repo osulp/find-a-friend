@@ -67,6 +67,11 @@ class PostsController < ApplicationController
     respond_with @post
   end
 
+  def query
+    @posts = Post.where("location = ? AND end_time >= ? AND meeting_time <= ?", params[:location], Time.parse(params[:start]), Time.parse(params[:end]))
+    respond_with @posts
+  end
+
   private
 
   def post_params
