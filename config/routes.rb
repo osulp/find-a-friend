@@ -1,7 +1,11 @@
 Blog::Application.routes.draw do
   get "users/new"
   #get 'posts/index'
-  resources :posts
+  resources :posts do
+    collection do
+      get '/query', :to => "posts#query"
+    end
+  end
   get '/admin', :to => "admin#index", :as => "admin_index"
   namespace :admin do
     resources :locations
