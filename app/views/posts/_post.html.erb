@@ -10,7 +10,7 @@
   </div>
   <div class="panel panel-body">
     Description: <%= post.description %><br>
-    Location: <%= post.location %><br>
+    Location: <%= post.location_string(@locations) %><br>
     Meeting Time: <%= post.FormatMeetingTime %><br>
     End Time: <%= post.FormatEndingTime %><br>
   </div>

@@ -7,6 +7,7 @@ class PostsController < ApplicationController
 
   def index
     @posts = PostDecorator.decorate_collection(Post.all)
+    @locations = Location.all
   end
 
   def new

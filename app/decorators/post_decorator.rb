@@ -42,5 +42,20 @@ class PostDecorator < Draper::Decorator
     end
   end
 
+  def content(locations)
+    return h.image_tag((locations.find_by(:location => post.location).photo_url(:thumb))) unless locations.find_by(:location => post.location) == nil
+  end
+
+  def location_string(locations)
+    h.link_to_unless(!locations.map{|x| x.location}.include?(self.location), self.location, {}, 
+    {
+      :class => "myPopover",
+      :href => "#",
+      :rel => "popover",
+      :tabindex => "0",
+      :data => {:toggle => "popover", :trigger => "focus", :content => self.content(locations).to_s.gsub('"',"'") },
+      :title => self.location
+    })
+  end
 end
 
