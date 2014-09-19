@@ -23,7 +23,7 @@ describe 'links to locations' do
     end
   end
 
-  context "When creating a post with a location saved in the database" do
+  context "When creating a post without a location saved in the database" do
     before do
       visit new_post_path
       fill_in "Title", :with => "Sample Title"
