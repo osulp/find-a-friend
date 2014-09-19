@@ -29,6 +29,6 @@ class PopularLocationManager
     @form_selector.submit()
   max_length: -> 2
   location_busy: ->
-    if confirm("This location has multiple events during this time span, are you sure you want to use it?")
+    if confirm("The location that you have entered seems to be busy at your group's meeting time. Do you want to create your group anyways?")
       @valid_form = true
       @form_selector.submit()
