@@ -6,6 +6,7 @@ class PostsController < ApplicationController
   before_filter :find_decorated_post, :only => [:show]
 
   def index
+    @abouts = About.all
     @posts = PostCollectionDecorator.new(Post.today)
     @user_posts = Post.future.where(:onid => current_user) if current_user
     @user_posts ||= []

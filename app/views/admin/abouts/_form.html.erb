@@ -1,0 +1,4 @@
+<%= simple_form_for([:admin, @about], :html => {:class => 'form-horizontal', :multipart => true}) do |f| %>
+  <%= f.input :about_text %>
+  <%= f.button :submit %>
+<% end %>

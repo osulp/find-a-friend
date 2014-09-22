@@ -1,6 +1,5 @@
 Blog::Application.routes.draw do
   get "users/new"
-  #get 'posts/index'
   resources :posts do
     collection do
       get '/query', :to => "posts#query"
@@ -10,6 +9,7 @@ Blog::Application.routes.draw do
   namespace :admin do
     resources :locations
     resources :admins
+    resources :abouts
   end
 	
   match '/signin', to: 'sessions#new',	via:'get'
