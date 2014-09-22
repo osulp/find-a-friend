@@ -17,6 +17,7 @@
 //= require typeahead.bundle
 //= require typeahead
 //= require dataTables/jquery.dataTables
+//= require datatables
 //
 //= require datetime_picker
 //
