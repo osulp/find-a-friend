@@ -15,18 +15,6 @@ class PostDecorator < Draper::Decorator
     recipients.split(",").map{|x| x.strip.split("@").first} | [onid]
   end
 
-  def date_passed(object_date)
-    if object_date.year.to_i < Time.now.year.to_i
-      return true
-    elsif object_date.month.to_i < Time.now.month.to_i
-      return true
-    elsif object_date.day.to_i < Time.now.day.to_i
-      return true
-    else
-      return false
-    end
-  end
-
   def description_content(locations)
     unless locations.find_by(:location => post.location) == nil
       return locations.find_by(:location => post.location).description unless locations.find_by(:location => post.location).description == nil

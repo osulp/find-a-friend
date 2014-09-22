@@ -70,5 +70,10 @@ describe "locations" do
     it "should save and display it" do
       expect(page).to have_css('img')
     end
+    context "and display it on the home page" do
+      before do
+        visit root_path
+      end
+    end
   end
 end
