@@ -1,0 +1,32 @@
+<% if posts.length == 0 %>
+  <%= I18n.t("post.my_posts.no_posts_message") %>
+<% else %>
+  <table id="<%= posts.id %>" class="display posts-table" cellspacing="1" width="100%">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Meeting time</th>
+        <th>End time</th>
+        <th>Recipients</th>
+        <% if posts.user_posts? %>
+          <th>Edit/Delete</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% posts.each do |post| %>
+        <tr>
+          <%= render partial: "post", :object => post %>
+          <% if posts.user_posts? %>
+            <td>
+              <%= link_to "Edit", edit_post_path(post), :style => "padding-left: 10px;" %>
+              <%= link_to "Delete", post_path(post), :method => :delete, :data => {:confirm => I18n.t('post.delete_string')} %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

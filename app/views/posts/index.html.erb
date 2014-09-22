@@ -1,65 +1,13 @@
 <div class="container-fluid">
   <% if current_user %>
     <h1>Your Groups</h1>
-
-    <table id="my-posts-table" class="display" cellspacing="1" width="100%">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Location</th>
-          <th>Meeting time</th>
-          <th>End time</th>
-          <th>Recipients</th>
-          <th>Edit/Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if @posts.length != 0 %>
-          <% @posts.each do |post| %>
-            <% if post.onid == current_user %>
-              <% if !(post.past?) %>
-                <tr>
-                  <%= render partial: "post", :object => post %>
-                  <td><%= link_to "Edit", edit_post_path(post), :style => "padding-left: 10px;" %>
-                    <%= link_to "Delete", post_path(post), :method => :delete, :data => {:confirm => I18n.t('post.delete_string')} %></td>
-                </tr>
-              <% end %>
-            <% end %>
-          <% end %>
-        </tbody>
-      <% else %>
-        <%= I18n.t("post.my_posts.no_posts_message") %>
-      <% end %>
-    </table>
+    <%= render :partial => "posts", :locals => {:posts => @user_posts} %>
   <% end %>
 
   <h1>Groups Meeting Today</h1>
 
     <div id="displayed-groups">
-      <table id="all-posts-table" class="display" cellspacing="1" width="100%" >
-        <thead>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Location</th>
-          <th>Meeting time</th>
-          <th>End time</th>
-          <th>Recipients</th>
-        </thead>
-        <% if @posts.length != 0 %>
-          <tbody>
-            <% @posts.each do |post| %>
-              <% if post.today? %>
-                <tr>
-                  <%= render partial: "post", :object => post %>
-                </tr>
-              <% end %>
-            <% end %>
-          </tbody>
-        <% else %>
-          <%= I18n.t('post.all_posts.no_posts_message') %>
-        <% end %>
-      </table>
+      <%= render :partial => "posts", :locals => {:posts => @posts} %>
     </div>
 
 </div>
