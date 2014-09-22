@@ -35,8 +35,9 @@ describe 'Mailer' do
       context "then when editing the post" do
         before do
           within("#displayed-groups") do
-            click_link "Edit"
+            click_link "Test Title"
           end
+          click_link "Edit"
         end
 
         context "and the post has email recipients" do
@@ -77,8 +78,9 @@ describe 'Mailer' do
       context "then when editing the post" do
         before do
           within("#displayed-groups") do
-            click_link "Edit"
+            click_link "Test Title"
           end
+          click_link "Edit"
         end
 
         context "and the post has email recipients" do

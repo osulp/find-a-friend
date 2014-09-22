@@ -1,34 +1,13 @@
 <div class="container-fluid">
   <% if current_user %>
     <h1>Your Groups</h1>
-
-    <% if @posts.length != 0 %>
-      <% @posts.each do |post| %>
-        <% if post.onid == current_user %>
-          <% if !(post.past?) %>
-            <%= render partial: "post", :object => post %>
-          <% end %>
-        <% end %>
-      <% end %>
-    <% else %>
-      <%= I18n.t("post.my_posts.no_posts_message") %>
-    <% end %>
+    <%= render :partial => "posts", :locals => {:posts => @user_posts} %>
   <% end %>
 
-	<h1>Groups Meeting Today</h1>
+  <h1>Groups Meeting Today</h1>
 
-  <div id="displayed-groups">
-    <% if @posts.length != 0 %>
-      <% @posts.each do |post| %>
-        <% if post.today? %>
-          <div class="panel-group" id="accordion">
-            <%= render partial: "post", :object => post %>
-          </div>
-        <% end %>
-      <% end %>
-    <% else %>
-      <%= I18n.t('post.all_posts.no_posts_message') %>
-    <% end %>
-  </div>
+    <div id="displayed-groups">
+      <%= render :partial => "posts", :locals => {:posts => @posts} %>
+    </div>
 
 </div>

@@ -35,14 +35,15 @@ describe "homepage" do
       visit root_path
     end
     it "should display the posts" do
+      expect(page).to have_selector("#all-posts-table")
       expect(page).to have_link(post1.title)
       expect(page).to have_content(post1.description)
       expect(page).to have_content(post1.meeting_time.strftime(I18n.t('time.formats.default')))
     end
     context "when not logged in as the owner of the post" do
       it "should not have links to edit and delete posts" do
-        expect(page).to_not have_content("Edit")
-        expect(page).to_not have_content("Delete")
+        expect(page).to_not have_link("Edit")
+        expect(page).to_not have_link("Delete")
       end
     end
     context "when logged in as the creator of the post" do
@@ -92,10 +93,6 @@ describe "homepage" do
       it "should display your posts at the top of the page" do
         expect(page).to have_content("Your Groups")
         expect(page).to have_content(post1.title, :count => 2)
-      end
-      it "should have links to edit and delete the post" do
-        expect(page).to have_content("Edit")
-        expect(page).to have_content("Delete")
       end
     end
     context "when the post time has not passed and when logged in as the owner of the post" do

@@ -105,8 +105,9 @@ describe 'Posts' do
       	  before do
             visit root_path
             within("#displayed-groups") do
-      	      click_link "Edit"
+              click_link Post.first.title
             end
+            click_link "Edit"
       	  end
           context "when making it overlap with another post" do
             before do
@@ -164,8 +165,9 @@ describe 'Posts' do
         context "When trying to delete the post" do
       	  before do
             within("#displayed-groups") do
-      	      click_link "Delete"
+              click_link Post.last.title
             end
+            click_link "Delete"
       	  end
       	  it "should be deleted" do
       	    expect(Post.count).to eq 0

@@ -22,6 +22,8 @@ gem 'sidekiq'
 #For photo uploaders
 gem 'carrierwave'
 gem 'rmagick', '~> 2.13.2', :require => false
+#For datatables
+gem 'jquery-datatables-rails', '~> 2.2.3'
 
 group :development do
   gem 'spring'
