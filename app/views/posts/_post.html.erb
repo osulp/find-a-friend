@@ -1,17 +1,11 @@
-<div class="panel panel-default">
-  <div class="panel panel-heading">
-    <div class="panel-title">
-      <%= link_to post.title, post_path(post) %>
-      <% if current_user == post.onid && !(current_user == nil) %>
-        <%= link_to "Edit", edit_post_path(post), :class => "pull-right", :style => "padding-left: 10px;" %>
-        <%= link_to "Delete", post_path(post), :class => "pull-right", :method => :delete, :data => {:confirm => I18n.t("post.delete_string")} %>
-      <% end %>
-    </div>
-  </div>
-  <div class="panel panel-body">
-    Description: <%= post.description %><br>
-    Location: <%= post.location_string(@locations) %><br>
-    Meeting Time: <%= post.FormatMeetingTime %><br>
-    End Time: <%= post.FormatEndingTime %><br>
-  </div>
-</div>
+<td><%= link_to post.title, post_path(post) %></td>
+<td><%= post.description %></td>
+<td><%= post.location_string(@locations) %></td>
+<td><%= post.FormatMeetingTime %></td>
+<td><%= post.FormatEndingTime %></td>
+<td><% unless post.recipients.blank? %>
+    <% if post.recipient_onids.include?(current_user) %>
+      <%= post.recipients %>
+    <% end %>
+  <% end %>
+</td>

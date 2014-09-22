@@ -16,6 +16,7 @@
 //= require jquery-ui-timepicker-addon
 //= require typeahead.bundle
 //= require typeahead
+//= require dataTables/jquery.dataTables
 //
 //= require datetime_picker
 //
