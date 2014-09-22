@@ -24,6 +24,8 @@ gem 'carrierwave'
 gem 'rmagick', '~> 2.13.2', :require => false
 #For datatables
 gem 'jquery-datatables-rails', '~> 2.2.3'
+#Tinimce for text editing
+gem 'tinymce-rails', '4.0.11'
 
 group :development do
   gem 'spring'

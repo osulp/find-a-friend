@@ -35,28 +35,35 @@ describe "admin panel" do
       before do
         click_link "New About Text"
         fill_in "About text", :with => "Test about text 1"
-        click_button "Create About"
       end
-      it "should display it on the index page" do
-        expect(page).to have_content(About.last.about_text)
+      it "should have a WYSIWYG editor" do
+        expect(page).to have_selector(".tinymce")
       end
-      context "when updating that about text" do
+      context "when creating the about" do
         before do
-          click_link "Edit"
-          fill_in "About text", :with => "Test about text 2"
-          click_button "Update About"
+          click_button "Create About"
         end
-        it "should save and display the changes" do
+        it "should display it on the index page" do
           expect(page).to have_content(About.last.about_text)
         end
-      end
-      context "when deleting that about" do
-        before do
-          click_link "Delete"
+        context "when updating that about text" do
+          before do
+            click_link "Edit"
+            fill_in "About text", :with => "Test about text 2"
+            click_button "Update About"
+          end
+          it "should save and display the changes" do
+            expect(page).to have_content(About.last.about_text)
+          end
         end
-        it "should delete the about" do
-          expect(page).to_not have_content("Test about text 2")
-          expect(About.all.count).to eq 0
+        context "when deleting that about" do
+          before do
+            click_link "Delete"
+          end
+          it "should delete the about" do
+            expect(page).to_not have_content("Test about text 2")
+            expect(About.all.count).to eq 0
+          end
         end
       end
     end

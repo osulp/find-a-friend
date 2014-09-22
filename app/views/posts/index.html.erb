@@ -3,7 +3,7 @@
     <h1>About Find-a-Friend</h1>
   <% end %>
     <% @abouts.each do |about| %>
-      <%= about.about_text %>
+      <%= raw about.about_text %>
       <br>
     <% end %>
   <% if current_user %>

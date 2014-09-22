@@ -18,6 +18,7 @@
 //= require typeahead
 //= require dataTables/jquery.dataTables
 //= require datatables
+//= require tinymce-jquery
 //
 //= require datetime_picker
 //
