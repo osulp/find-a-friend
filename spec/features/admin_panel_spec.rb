@@ -17,7 +17,54 @@ describe "admin panel" do
     it "should have links to the location and admin status pages" do
       within(".panel-default") do
         expect(page).to have_link("Update User Admin Status")
+        expect(page).to have_link("Update About Text")
         expect(page).to have_link("Update Locations")
+      end
+    end
+  end
+  context "when changing the about texts" do
+    before do
+      click_link "Update About Text"
+    end
+    context "when on the index" do
+      it "should link to add an about" do
+        expect(page).to have_link("New About Text")
+      end
+    end
+    context "when adding an about" do
+      before do
+        click_link "New About Text"
+        fill_in "About text", :with => "Test about text 1"
+      end
+      it "should have a WYSIWYG editor" do
+        expect(page).to have_selector(".tinymce")
+      end
+      context "when creating the about" do
+        before do
+          click_button "Create About"
+        end
+        it "should display it on the index page" do
+          expect(page).to have_content(About.last.about_text)
+        end
+        context "when updating that about text" do
+          before do
+            click_link "Edit"
+            fill_in "About text", :with => "Test about text 2"
+            click_button "Update About"
+          end
+          it "should save and display the changes" do
+            expect(page).to have_content(About.last.about_text)
+          end
+        end
+        context "when deleting that about" do
+          before do
+            click_link "Delete"
+          end
+          it "should delete the about" do
+            expect(page).to_not have_content("Test about text 2")
+            expect(About.all.count).to eq 0
+          end
+        end
       end
     end
   end

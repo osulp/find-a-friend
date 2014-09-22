@@ -1,4 +1,11 @@
 <div class="container-fluid">
+  <% if @abouts.length > 0 %>
+    <h1>About Find-a-Friend</h1>
+  <% end %>
+    <% @abouts.each do |about| %>
+      <%= raw about.about_text %>
+      <br>
+    <% end %>
   <% if current_user %>
     <h1>Your Groups</h1>
     <%= render :partial => "posts", :locals => {:posts => @user_posts} %>

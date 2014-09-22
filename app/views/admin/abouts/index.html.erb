@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  <h1>About</h1>
+
+  <%= link_to "New About Text", new_admin_about_path %>
+
+  <% @abouts.each do |about| %>
+    <div class="panel panel-default">
+      <div class="panel panel-heading">
+        <div class="panel-title">About Us
+          <%= link_to "Delete", admin_about_path(about), :class => "pull-right", :style => "padding-right: 10px;", :method => :delete, :data => {:confirm => I18n.t("about.delete_string")} %>
+          <%= link_to "Edit", edit_admin_about_path(about), :class => "pull-right", :style => "padding-right: 10px;" %>
+        </div>
+      </div>
+      <div class="panel panel-body">
+        <%= raw about.about_text %>
+      </div>
+    </div>
+  <% end %>
+</div>
