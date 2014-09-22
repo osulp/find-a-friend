@@ -29,3 +29,7 @@
 
 #ignore uploaded photos
 /public/uploads/*
+
+# Ignore deploy config files
+/config/god.conf
+/config/unicorn.rb

@@ -18,8 +18,14 @@ test:
   pool: 5
   timeout: 5000
 
-production:
-  adapter: sqlite3
-  database: db/production.sqlite3
+production: &production
+  adapter: <%= ENV['FINDFRIEND_ADAPTER'] || "sqlite3" %>
+  database: <%= ENV['FINDFRIEND_DB'] || 'db/production.sqlite3' %>
+  encoding: utf8
+  reconnect: false
+  username: <%= ENV['FINDFRIEND_DB_USERNAME'] %>
+  password: <%= ENV['FINDFRIEND_DB_PASSWORD'] %>
+  host: <%= ENV['FINDFRIEND_DB_HOST'] %>
+  port: <%= ENV['FINDFRIEND_DB_PORT'] %>
   pool: 5
   timeout: 5000
