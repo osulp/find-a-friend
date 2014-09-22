@@ -3,5 +3,6 @@
 FactoryGirl.define do
   factory :location do
     sequence(:location) { |n| "location #{n}" }
+    description nil
   end
 end

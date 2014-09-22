@@ -64,11 +64,21 @@ describe "locations" do
     before do
       visit new_admin_location_path
       fill_in "* Location", :with => "Stuff"
+      fill_in "Description", :with => "Sample Description"
       attach_file("location_photo", "spec/fixtures/cats.jpg")
       click_button "Create Location"
     end
     it "should save and display it" do
       expect(page).to have_css('img')
+      expect(page).to have_content("Sample Description")
+    end
+    context "on the home page" do
+      before do
+        visit root_path
+      end
+      it "is should have the info" do
+        expect(page).to have_content("Sample Description")
+      end
     end
   end
 end

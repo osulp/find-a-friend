@@ -42,7 +42,7 @@ class Admin::LocationsController < AdminController
   private
 
   def location_params
-    params.require(:location).permit(:location, :photo)
+    params.require(:location).permit(:location, :description, :photo)
   end
 
   def find_location

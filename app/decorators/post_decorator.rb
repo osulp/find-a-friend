@@ -15,8 +15,18 @@ class PostDecorator < Draper::Decorator
     recipients.split(",").map{|x| x.strip.split("@").first} | [onid]
   end
 
-  def content(locations)
+  def description_content(locations)
+    unless locations.find_by(:location => post.location) == nil
+      return locations.find_by(:location => post.location).description unless locations.find_by(:location => post.location).description == nil
+      return ""
+    else
+      return ""
+    end
+  end
+
+  def photo_content(locations)
     return h.image_tag((locations.find_by(:location => post.location).photo_url(:thumb))) unless locations.find_by(:location => post.location) == nil
+    return ""
   end
 
   def location_string(locations)
@@ -26,7 +36,7 @@ class PostDecorator < Draper::Decorator
       :href => "#",
       :rel => "popover",
       :tabindex => "0",
-      :data => {:toggle => "popover", :trigger => "focus", :content => self.content(locations).to_s.gsub('"',"'") },
+      :data => {:toggle => "popover", :trigger => "focus", :content => self.photo_content(locations).to_s.gsub('"',"'")+self.description_content(locations) },
       :title => self.location
     })
   end
