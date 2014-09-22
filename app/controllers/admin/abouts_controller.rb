@@ -15,7 +15,7 @@ class Admin::AboutsController < AdminController
     if @about.save
       flash[:success] = I18n.t("admin.abouts.success.creating")
     else
-      flash[:error] = I18n.t("admin.about.error.creating")
+      flash[:error] = I18n.t("admin.abouts.error.creating")
     end
     respond_with @about, :location => admin_abouts_path
   end
@@ -30,9 +30,9 @@ class Admin::AboutsController < AdminController
 
   def destroy
     if @about.destroy
-      flash[:success] = I18n.t("admin.about.success.deleting")
+      flash[:success] = I18n.t("admin.abouts.success.deleting")
     else
-      flash[:error] = I18n.t("admin.about.error.deleting")
+      flash[:error] = I18n.t("admin.abouts.error.deleting")
     end
     respond_with [:admin, @about]
   end
