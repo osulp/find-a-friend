@@ -8,7 +8,7 @@ set :stages, config['stages'] || []
 set :default_stage, config['default_stage'] || (config['stages'] || []).first
 require 'capistrano/ext/multistage'
 
-set :application, 'ArtWalk'
+set :application, 'FindaFriend'
 set :repository, config['repository']
 set :user, config['user']
 set :default_environment, config['default_environment'] || {}
