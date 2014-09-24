@@ -48,7 +48,10 @@
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-  <%= image_tag "library-banner.jpg", class: "img-responsive img-rounded shrink" %>
+    <div>
+      <%= image_tag "library-banner.jpg", class: "img-responsive img-rounded shrink" %>
+      <span class="pull-right" style="padding-right: 10px;">Image copyright of <a href="http://www.chris-schuster.com/">Chris Schuster</a></span>
+    </div>
   <%= render "application/flashes" %>
   <%= yield %>
   </body>
