@@ -3,8 +3,8 @@ FactoryGirl.define do
     sequence(:title) { |n| "Group Title Number #{n}" }
     description "Description Text"
     location "location string"
-    sequence(:meeting_time) { |n| DateTime.current.midnight + n.minutes }
-    sequence(:end_time) { |n| DateTime.current.midnight + n.minutes }
+    sequence(:meeting_time) { |n| DateTime.current.midnight + (2*n).minutes }
+    sequence(:end_time) { |n| DateTime.current.midnight + (2*n).minutes + 1.minutes }
     recipients nil
     onid "blah"
 

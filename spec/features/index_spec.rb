@@ -102,7 +102,7 @@ describe "homepage" do
         fill_in "Title", :with => "test title"
         fill_in "Description", :with => "description"
         fill_in "Meeting time", :with => (DateTime.current.midnight+2.days).strftime(I18n.t('time.formats.default'))
-        fill_in "End time", :with => (DateTime.current.midnight+2.days).strftime(I18n.t('time.formats.default'))
+        fill_in "End time", :with => (DateTime.current.midnight+2.days+1.minutes).strftime(I18n.t('time.formats.default'))
         fill_in "Location", :with => "test location string to input"
         click_button "Create Post"
         visit root_path
