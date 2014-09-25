@@ -93,7 +93,7 @@ describe 'Posts' do
           fill_in "Location", :with => "Location String"
     	    fill_in "Description", :with => "Test Description"
           fill_in "Meeting time", :with => Time.current
-          fill_in "End time", :with => Time.current
+          fill_in "End time", :with => Time.current + 1.minutes
     	    click_button "Create Post"
         end
         it "should save and display it" do
@@ -126,7 +126,7 @@ describe 'Posts' do
                 fill_in "Description", :with => "testdescription"
                 fill_in "Location", :with => "testlocation"
                 fill_in "Meeting time", :with => "2000-01-01 00:00:00"
-                fill_in "End time", :with => "2000-01-01 00:00:00"
+                fill_in "End time", :with => "2000-01-01 00:00:01"
                 click_button "Create Post"
                 visit edit_post_path(Post.last)
                 fill_in "Meeting time", :with => (DateTime.current + 7.hours)

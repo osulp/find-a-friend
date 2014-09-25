@@ -22,7 +22,7 @@ describe 'Mailer' do
         fill_in "Description", :with => "Test Description"
         fill_in "Location", :with => "Location String"
         fill_in "Meeting time", :with => Time.now
-        fill_in "End time", :with => Time.now
+        fill_in "End time", :with => Time.now + 1.minutes
         fill_in "Recipients", :with => "Email@test.com"
         uncheck I18n.t("post.reply_to_checkbox")
         click_button "Create Post"
@@ -65,7 +65,7 @@ describe 'Mailer' do
         fill_in "Description", :with => "Test Description"
         fill_in "Location", :with => "Location String"
         fill_in "Meeting time", :with => Time.now
-        fill_in "End time", :with => Time.now
+        fill_in "End time", :with => Time.now + 1.minutes
         fill_in "Recipients", :with => "Email@test.com"
         click_button "Create Post"
       end

@@ -12,6 +12,7 @@ class Post < ActiveRecord::Base
 
   private
   def order?
-    errors.add(:end_time, 'must be after start time') if self.meeting_time.nil? || self.end_time.nil? || self.meeting_time >= self.end_time
+    return if self.meeting_time.nil? || self.end_time.nil?
+    errors.add(:end_time, 'must be after start time') if self.meeting_time >= self.end_time
   end
 end
