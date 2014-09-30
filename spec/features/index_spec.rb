@@ -17,10 +17,16 @@ describe "homepage" do
     it "should link to the admin page" do
       expect(page).to have_link("Admin")
     end
+    it "should have tabs" do
+      expect(page).to have_selector(".nav-tabs")
+    end
   end
   context "when not logged in as an admin" do
     it "should not have a link to the admin page" do
       expect(page).to_not have_link("Admin")
+    end
+    it "should have tabs" do
+      expect(page).to have_selector(".nav-tabs")
     end
   end
   context "when there are no posts" do
