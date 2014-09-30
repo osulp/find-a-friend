@@ -19,6 +19,7 @@
 //= require dataTables/jquery.dataTables
 //= require datatables
 //= require tinymce-jquery
+//= require tabs
 //
 //= require datetime_picker
 //
