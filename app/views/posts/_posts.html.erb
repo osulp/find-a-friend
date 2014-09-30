@@ -10,8 +10,11 @@
         <th>Meeting time</th>
         <th>End time</th>
         <th>Recipients</th>
-        <% if posts.user_posts? %>
+        <% if posts.edit_posts? %>
           <th>Edit/Delete</th>
+        <% end %>
+        <% if posts.user_posts? %>
+          <th>Contact ONID</th>
         <% end %>
       </tr>
     </thead>
@@ -19,10 +22,17 @@
       <% posts.each do |post| %>
         <tr>
           <%= render partial: "post", :object => post %>
-          <% if posts.user_posts? %>
+          <% if posts.edit_posts? %>
             <td>
               <%= link_to "Edit", edit_post_path(post), :style => "padding-left: 10px;" %>
               <%= link_to "Delete", post_path(post), :method => :delete, :data => {:confirm => I18n.t('post.delete_string')} %>
+            </td>
+          <% end %>
+          <% if posts.user_posts? %>
+            <td>
+              <% if post.allow_onid %>
+                <%= post.onid %>
+              <% end %>
             </td>
           <% end %>
         </tr>
