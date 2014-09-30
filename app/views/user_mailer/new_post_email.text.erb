@@ -2,7 +2,7 @@ Hello,
   This is a notification from Find-A-Friend about a study session.
 
 <% if @post.allow_onid %>
-  <%= @post.onid %> would like to request that you come study.
+  <%= @post.onid %> would like to request that you come study. You can view this study group at <%= link_to "Oregon State University Find-a-Friend", post_path(@post) %>.
   You can reply to this person using their onid:
   <%= @post.onid %>@onid.oregonstate.edu
 <% end %>
