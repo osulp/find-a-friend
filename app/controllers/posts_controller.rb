@@ -10,10 +10,10 @@ class PostsController < ApplicationController
     @posts = PostCollectionDecorator.new(Post.today)
     @user_posts = Post.future.where(:onid => current_user) if current_user
     @user_posts ||= []
-    @user_posts = PostCollectionDecorator.new(@user_posts, true)
+    @user_posts = PostCollectionDecorator.new(@user_posts, true, false)
     @part_of_posts = Post.future.where("recipients LIKE '%#{current_user}%'") if current_user
     @part_of_posts ||= []
-    @part_of_posts = PostCollectionDecorator.new(@part_of_posts, false)
+    @part_of_posts = PostCollectionDecorator.new(@part_of_posts, false, true)
     @locations = Location.all
   end
 
