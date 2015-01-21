@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
   respond_to :html, :json
-  before_filter :current_user, :only => [:create, :edit, :update, :destroy]
   before_filter :check_sign_in, :only => [:new, :edit]
   before_filter :find_post, :only => [:edit, :update, :destroy, :show]
   before_filter :find_decorated_post, :only => [:show]
+  rescue_from Pundit::NotAuthorizedError, :with => :not_authorized
 
   def index
     @abouts = About.all
@@ -23,7 +23,7 @@ class PostsController < ApplicationController
   end
    
   def create
-    @post = Post.new(post_params)
+    @post = Post.new(post_params.merge(:onid => current_user))
     if check_conflict
       if @post.save
         flash[:success] = I18n.t("post.success.posting")
@@ -48,10 +48,12 @@ class PostsController < ApplicationController
   end
 
   def edit
+    authorize @post
     @locations = Location.all
   end
 
   def update
+    authorize @post
     @post.attributes = post_params
     if check_conflict
       if @post.onid == current_user
@@ -67,6 +69,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
+    authorize @post
     if @post.destroy
       flash[:success] = I18n.t("post.success.deleting")
     else
@@ -83,7 +86,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :description, :meeting_time, :end_time, :recipients, :onid, :allow_onid, :location)
+    params.require(:post).permit(:title, :description, :meeting_time, :end_time, :recipients, :allow_onid, :location)
   end
 
   def find_post
@@ -119,5 +122,10 @@ class PostsController < ApplicationController
       end
     end
     return false
+  end
+
+  def not_authorized
+    flash[:error] = I18n.t('post.errors.permissions')
+    redirect_to root_path
   end
 end

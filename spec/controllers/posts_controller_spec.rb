@@ -19,4 +19,87 @@ describe PostsController do
       end
     end
   end
+
+  describe "#update" do
+    let(:post_1) { create(:post) }
+    let(:username) {}
+    let(:post_params) do
+      {
+        :title => "banana"
+      }
+    end
+    before do
+      controller.stub(:current_user).and_return(username) if username
+      patch :update, :id => post_1.id, :post => post_params
+    end
+    context "when logged in" do
+      let(:username) { "test1"} 
+      context "and they don't own the post" do
+        it "should redirect" do
+          expect(response).to be_redirect
+        end
+        it "should set a flash message" do
+          expect(flash[:error]).to eq t("post.errors.permissions")
+        end
+      end
+      context "and they own the post" do
+        let(:post_1) { create(:post, :onid => username) }
+        it "should not set a flash message" do
+          expect(flash[:error]).to be_nil
+        end
+      end
+    end
+  end
+
+  describe "#destroy" do
+    let(:post_1) { create(:post) }
+    let(:username) {}
+    before do
+      controller.stub(:current_user).and_return(username) if username
+      delete :destroy, :id => post_1.id
+    end
+    context "when logged in" do
+      let(:username) { "test1"} 
+      context "and they don't own the post" do
+        it "should redirect" do
+          expect(response).to be_redirect
+        end
+        it "should set a flash message" do
+          expect(flash[:error]).to eq t("post.errors.permissions")
+        end
+      end
+      context "and they own the post" do
+        let(:post_1) { create(:post, :onid => username) }
+        it "should not set a flash message" do
+          expect(flash[:error]).to be_nil
+        end
+      end
+    end
+  end
+
+  describe "#edit" do
+    let(:post_1) { create(:post) }
+    let(:username) {}
+    before do
+      controller.stub(:current_user).and_return(username) if username
+      get :edit, :id => post_1.id
+    end
+    context "when not logged in" do
+      it "should redirect" do
+        expect(response).to be_redirect
+      end
+    end
+    context "when logged in" do
+      let(:username) { "test1" }
+      context "and they don't own the post" do
+        it "should redirect" do
+          expect(response).to be_redirect
+        end
+        it "should set a flash message" do
+          expect(flash[:error]).to eq t("post.errors.permissions")
+        end
+      end
+    end
+  end
+
 end
