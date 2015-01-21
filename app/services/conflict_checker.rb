@@ -7,14 +7,14 @@ class ConflictChecker
   def initialize(user_posts, post, callbacks=[])
     @user_posts = user_posts
     @post = post
-    @callbacks = Array.wrap(callbacks)
+    @callbacks = SubscriptionList.new(*Array.wrap(callbacks))
   end
 
   def run!
     if conflicts?
-      notify_conflicts
+      callbacks.conflicts(post)
     else
-      notify_no_conflict
+      callbacks.no_conflict(post)
     end
   end
 
@@ -26,17 +26,4 @@ class ConflictChecker
     return false
   end
 
-  private
-
-  def notify_conflicts
-    callbacks.each do |callback|
-      callback.conflicts(post)
-    end
-  end
-
-  def notify_no_conflict
-    callbacks.each do |callback|
-      callback.no_conflict(post)
-    end
-  end
 end
