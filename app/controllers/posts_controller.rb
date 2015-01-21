@@ -39,14 +39,15 @@ class PostsController < ApplicationController
 
     def post_saved(post)
       flash[:success] = I18n.t("post.success.posting")
-      if post.meeting_time
-        if post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
-          flash[:warning] = I18n.t("post.warnings.future")
-        end
-      end
-      if post.recipients.present?
-        UserMailer.delay.new_post_email(post)
-      end
+      flash[:warning] = I18n.t("post.warnings.future") if meeting_time_in_future?(post.meeting_time)
+      UserMailer.delay.new_post_email(post) if post.recipients.present?
+    end
+
+    private
+
+    def meeting_time_in_future?(meeting_time)
+      meeting_time ||= Time.at(0)
+      meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
     end
   end
 
