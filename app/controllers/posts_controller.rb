@@ -8,8 +8,7 @@ class PostsController < ApplicationController
   def index
     @abouts = About.all
     @posts = PostCollectionDecorator.new(Post.today)
-    @user_posts = Post.future.where(:onid => current_user) if current_user
-    @user_posts ||= []
+    @user_posts = user_posts.future
     @user_posts = PostCollectionDecorator.new(@user_posts, true, false)
     @part_of_posts = Post.future.where("recipients LIKE '%#{current_user}%'") if current_user
     @part_of_posts ||= []
@@ -24,23 +23,30 @@ class PostsController < ApplicationController
    
   def create
     @post = Post.new(post_params.merge(:onid => current_user))
-    if check_conflict
-      if @post.save
-        flash[:success] = I18n.t("post.success.posting")
-        if @post.meeting_time
-          if @post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
-            flash[:warning] = I18n.t("post.warnings.future")
-          end
+    ConflictChecker.call(user_posts, @post, CreateResponder.new(self))
+  end
+
+  class CreateResponder < SimpleDelegator
+    def conflicts(post)
+      flash[:error] = I18n.t('post.errors.overlap')
+      respond_with post, :location => new_post_path(post)
+    end
+
+    def no_conflict(post)
+      post_saved(post) if post.save
+      respond_with post, :location => root_path
+    end
+
+    def post_saved(post)
+      flash[:success] = I18n.t("post.success.posting")
+      if post.meeting_time
+        if post.meeting_time.strftime(I18n.t("time.formats.date")) != Time.now.strftime(I18n.t("time.formats.date"))
+          flash[:warning] = I18n.t("post.warnings.future")
         end
-      else
-        flash[:error] = I18n.t("post.errors.posting")
       end
-      if @post.recipients.present?
-        UserMailer.delay.new_post_email(@post)
+      if post.recipients.present?
+        UserMailer.delay.new_post_email(post)
       end
-      respond_with @post, :location => root_path
-    else
-      respond_with @post, :location => new_post_path(@post)
     end
   end
 
@@ -85,6 +91,10 @@ class PostsController < ApplicationController
 
   private
 
+  def user_posts
+    Post.where(:onid => current_user)
+  end
+
   def post_params
     params.require(:post).permit(:title, :description, :meeting_time, :end_time, :recipients, :allow_onid, :location)
   end
@@ -102,26 +112,12 @@ class PostsController < ApplicationController
   end
 
   def check_conflict
-    @user_posts = Post.where(:onid => current_user)
-    if @user_posts.length > 0 && !@user_posts.nil?
-      if conflict(@user_posts, @post)
-        flash[:error] = I18n.t('post.errors.overlap')
-        return false
-      else
-        return true
-      end
-    else
-      return true
-    end
+    return true unless ConflictChecker.new(user_posts, @post).conflicts?
+    flash[:error] = I18n.t('post.errors.overlap')
+    false
   end
 
   def conflict(user_posts, post2)
-    user_posts.each do |post1| 
-      unless post1.id == post2.id
-        return true if post2.meeting_time <= post1.end_time && post1.meeting_time <= post2.end_time
-      end
-    end
-    return false
   end
 
   def not_authorized
