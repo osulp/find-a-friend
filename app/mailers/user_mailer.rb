@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "findafriendapp@gmail.com"
+  default from: "Find a Friend <system@findfriend.library.oregonstate.edu>"
   
 	def new_post_email(post)
     @post = post
