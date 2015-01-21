@@ -13,6 +13,7 @@ en:
       overlap: "This post's time is in conflict with another group that you have created"
       posting: "Unable to save your post"
       deleting: "There was an problem in deleting your post"
+      permissions: "You do not have permissions to change this post."
     all_posts:
       no_posts_message: "There are currently no groups posted"
     my_posts:

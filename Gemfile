@@ -27,6 +27,7 @@ gem 'jquery-datatables-rails', '~> 2.2.3'
 #Tinimce for text editing
 gem 'tinymce-rails', '4.0.11'
 gem 'mysql2'
+gem 'pundit'
 
 group :development do
   gem 'spring'
