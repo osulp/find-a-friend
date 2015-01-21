@@ -49,6 +49,6 @@ en:
   time:
     formats:
       default: '%A, %B %d, %Y at %-I:%M:%S %p'
-      form: '%B %d %-I:%M:%S %p'
+      form: '%B %d %-I:%M:%S %p %z'
       date: '%b %-d, %Y'
       short: '%B %d'

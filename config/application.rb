@@ -36,5 +36,6 @@ module Blog
     config.rubycas.cas_destination_logout_param_name = application_config["rubycas"]["cas_destination_logout_param_name"]
 
     config.i18n.enforce_available_locales = true
+    config.time_zone = 'Pacific Time (US & Canada)'
   end
 end
