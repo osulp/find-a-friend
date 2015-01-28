@@ -7,12 +7,7 @@ class PostsController < ApplicationController
 
   def index
     @abouts = About.all
-    @posts = PostCollectionDecorator.new(Post.today)
-    @user_posts = user_posts.future
-    @user_posts = PostCollectionDecorator.new(@user_posts, true, false)
-    @part_of_posts = Post.future.where("recipients LIKE '%#{current_user}%'") if current_user
-    @part_of_posts ||= []
-    @part_of_posts = PostCollectionDecorator.new(@part_of_posts, false, true)
+    @posts = [today_posts, all_users_posts, part_of_posts]
     @locations = Location.all
   end
 
@@ -91,6 +86,22 @@ class PostsController < ApplicationController
   end
 
   private
+
+   def today_posts
+     PostCollectionDecorator.new(Post.today)
+   end
+   
+   def all_users_posts
+    @all_user_posts = user_posts.future
+    return PostCollectionDecorator.new(@all_user_posts, true, false)
+   end
+
+   def part_of_posts
+    @part_of = Post.future.where("recipients LIKE '%#{current_user}%'") if current_user
+    @part_of ||= []
+    @part_of = PostCollectionDecorator.new(@part_of, false, true)
+    return @part_of
+   end
 
   def user_posts
     Post.where(:onid => current_user)

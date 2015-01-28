@@ -1,4 +1,5 @@
 require 'spec_helper'
+binding.remote
 
 describe "post show" do
   let(:post) {create(:post, :with_location)}
