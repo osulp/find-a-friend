@@ -18,19 +18,19 @@
     <div class="tab-pane fade in active" id="today">
       <h1>Groups Meeting Today</h1>
       <div id="displayed-groups">
-        <%= render :partial => "posts", :locals => {:posts => @posts[0]} %>
+        <%= render :partial => "posts", :locals => {:posts => @posts.today_posts} %>
       </div>
     </div>
     <% if current_user %>
       <div class="tab-pane fade" id="yours">
         <h1>Your Groups</h1>
-        <%= render :partial => "posts", :locals => {:posts => @posts[1]} %>
+        <%= render :partial => "posts", :locals => {:posts => @posts.user_future_posts} %>
       </div>
     <% end %>
     <% if current_user %>
       <div class="tab-pane fade" id="part">
         <h1>Groups You are Part Of</h1>
-        <%= render :partial => "posts", :locals => {:posts => @posts[2]} %>
+        <%= render :partial => "posts", :locals => {:posts => @posts.part_of_posts} %>
       </div>
     <% end %>
 

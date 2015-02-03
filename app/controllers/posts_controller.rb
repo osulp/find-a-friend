@@ -7,7 +7,7 @@ class PostsController < ApplicationController
 
   def index
     @abouts = About.all
-    @posts = [today_posts, all_users_posts, part_of_posts]
+    @posts = PostFacade.new(current_user)
     @locations = Location.all
   end
 
@@ -15,7 +15,7 @@ class PostsController < ApplicationController
     @post = Post.new
     @locations = Location.all
   end
-   
+
   def create
     @post = Post.new(post_params.merge(:onid => current_user))
     ConflictChecker.call(user_posts, @post, CreateResponder.new(self))
@@ -87,22 +87,6 @@ class PostsController < ApplicationController
 
   private
 
-   def today_posts
-     PostCollectionDecorator.new(Post.today)
-   end
-   
-   def all_users_posts
-    @all_user_posts = user_posts.future
-    return PostCollectionDecorator.new(@all_user_posts, true, false)
-   end
-
-   def part_of_posts
-    @part_of = Post.future.where("recipients LIKE '%#{current_user}%'") if current_user
-    @part_of ||= []
-    @part_of = PostCollectionDecorator.new(@part_of, false, true)
-    return @part_of
-   end
-
   def user_posts
     Post.where(:onid => current_user)
   end
@@ -118,7 +102,7 @@ class PostsController < ApplicationController
   def find_decorated_post
     @post = Post.find(params[:id]).decorate
   end
-	
+
   def check_sign_in
     redirect_to signin_path(:source => request.original_url) if current_user.nil?
   end
@@ -127,9 +111,6 @@ class PostsController < ApplicationController
     return true unless ConflictChecker.new(user_posts, @post).conflicts?
     flash[:error] = I18n.t('post.errors.overlap')
     false
-  end
-
-  def conflict(user_posts, post2)
   end
 
   def not_authorized

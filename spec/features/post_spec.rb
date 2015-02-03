@@ -55,7 +55,7 @@ describe 'Posts' do
       end
       it "should not display the post in groups" do
         within '#displayed-groups' do
-          expect(page).to_not have_content("Test Title")
+         expect(page).to_not have_content("Test Title")
         end
       end
     end
