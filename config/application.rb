@@ -37,5 +37,6 @@ module Blog
 
     config.i18n.enforce_available_locales = true
     config.time_zone = 'Pacific Time (US & Canada)'
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

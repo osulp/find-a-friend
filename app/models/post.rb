@@ -10,6 +10,10 @@ class Post < ActiveRecord::Base
     where("meeting_time >= ? OR meeting_time IS NULL", Time.current.midnight)
   end
 
+  def time_range
+    (meeting_time..end_time)
+  end
+
   private
   def order?
     return if self.meeting_time.nil? || self.end_time.nil?
