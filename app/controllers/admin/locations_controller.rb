@@ -1,6 +1,5 @@
 class Admin::LocationsController < AdminController
   respond_to :html, :json
-  before_filter :current_user, :only => [:create, :edit, :update, :destroy]
   before_filter :find_location, :only => [:edit, :update, :destroy]
 
   def index

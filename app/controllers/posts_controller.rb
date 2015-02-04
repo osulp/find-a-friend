@@ -57,17 +57,7 @@ class PostsController < ApplicationController
   def update
     authorize @post
     @post.attributes = post_params
-    if check_conflict
-      if @post.onid == current_user
-        @post.save
-      end
-      if @post.recipients.present?
-        UserMailer.delay.update_post_email(@post)
-      end
-      respond_with @post, :location => root_path
-    else
-      respond_with @post, :location => edit_post_path(@post)
-    end
+    ConflictChecker.call(user_posts, @post, CreateResponder.new(self))
   end
 
   def destroy
